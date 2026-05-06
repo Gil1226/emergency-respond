@@ -44,6 +44,7 @@ function Login(){
                         {errors.general && <p className=" text-xs">{errors.general}</p>}
                         {errors.email && <p>{errors.email}</p>}
                         {errors.password && <p>{errors.password}</p>}
+                        {errors.notVerify && <p>{errors.notVerify}</p>}
                     </div>
                     
                 </div>

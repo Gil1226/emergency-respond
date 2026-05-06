@@ -15,14 +15,15 @@ Route::get('/sign-up', function(){
 });*/
 Route::middleware('guest')->group(function(){
     Route::get('/', fn () => Inertia::render('Login'));
-    Route::get('sign-up', fn () => Inertia::render('Signup'));
+    Route::get('/sign-up', fn () => Inertia::render('Signup'));
+    Route::get('/otp', fn () => Inertia::render('OtpConfirmation'));
 });
 
 Route::middleware('auth')->group(function(){
     Route::get('/dashboard', fn () => Inertia::render('Dashboard'));
 });
 
-
 Route::post('/sign-up', [UserController::class, "signUp"]);
 Route::post('/login', [UserController::class, "Login"]);
 Route::post('/logout', [UserController::class, "Logout"]); 
+Route::post('/otp', [UserController::class, "Otp"]);
