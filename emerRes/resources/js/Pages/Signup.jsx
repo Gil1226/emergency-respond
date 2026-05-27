@@ -12,7 +12,7 @@ function Signup(){
         e.preventDefault();
         post("/sign-up");
     }
-    console.log(errors)
+    
     return(
         <div className="h-screen flex flex-col items-center justify-center bg-gradient-to-b from-secondary to-primary">
              <div className="mb-[100px] mt-[-100px]">
@@ -20,7 +20,7 @@ function Signup(){
             </div>
 
             <div>
-                <div className="h-81 w-72 p-10 flex flex-col items-center justify-around card">
+                <div className="h-96 w-72 p-10 flex flex-col items-center justify-around card">
                     <p className="title">Sign Up</p>
                     <form onSubmit={(e) => signUp(e)}>
                         <div className="flex flex-col ">
@@ -51,6 +51,7 @@ function Signup(){
                             <input type="submit" className="h-10 w-28 button-style mt-[20px]"/>
                         </div>
                     </form>
+                    {errors.exists && <p>errors.exists</p>}
                 </div>
                 <p className="text-center text-white">Create an Account? <a href="/" className="link">Login</a></p>
             </div>

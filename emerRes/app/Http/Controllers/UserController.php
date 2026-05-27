@@ -19,15 +19,47 @@ class UserController extends Controller
             'name' => 'required',
             'password' => 'required|min:6',
             'contact_number' => 'required',
-            'email' => 'required|email|unique:users,email'
+            'email' => 'required|email'
         ]);
+
+        $emailChecker = User::where('email', $data['email'])->first();
+
+        if ($emailChecker && !$emailChecker->is_verified) {
+            if ($emailChecker->name == $data['name'] && Hash::check($data['password'], $emailChecker->password) && $emailChecker->contact_number == $data['contact_number']) {
+                $otp = rand(100000, 999999);
+
+                Mail::raw("Your OTP is: $otp", function ($msg) use ($emailChecker){
+                    $msg->to($emailChecker->email)->subject('Account Verification');
+                });
+                $emailChecker->update([
+                    "otp" => $otp,
+                    "otpExpiration" => Carbon::now()->addMinutes(5)
+                ]);
+                return Inertia::render('OtpConfirmation', [
+                    'email' => $emailChecker->email
+                ]);
+            }
+            else {
+                return back()->withErrors([
+                    'exist' => 'Email is already used and not Verified'
+                ]);
+            }
+        
+        }
+
+        if ($emailChecker) {
+            return back()->withErrors([
+                'exist' => 'Email already Exist'
+            ]);
+        }
 
         $otp = rand(100000, 999999);
 
         $data['password'] = Hash::make($data['password']);
         $data['otp'] = $otp;
-        $data['otpExpiration'] = Carbon::now()->addMinute(5);
+        $data['otpExpiration'] = Carbon::now()->addMinutes(5);
         $data['is_verified'] = false;
+        
         $user = User::create($data);
 
         Mail::raw("Your OTP is: $otp", function ($msg) use ($user){
@@ -52,13 +84,17 @@ class UserController extends Controller
                'general' => 'incorrect OTP'
             ])->withInput();
         }
-
-        if ($user->otp == $data['guess']) {
+        
+        if ($user->otp == $data['guess'] && Carbon::now() <= $user->otpExpiration) {
             $user->update([
                 'is_verified' => true
             ]);
 
         return redirect('/'); 
+        }else {
+            return redirect('/otp')->withErrors([
+               'general' => 'Code Expired'
+            ])->withInput();
         }
     }
 
@@ -72,20 +108,21 @@ class UserController extends Controller
             'password.required' => 'Password is Empty'
         ]);
 
-        $user = User::where('email', $data['email'])->first();
-        
-        if (!$user->is_verified) {
-            return back()->withErrors([
-                'notVerify' => 'Account is not Verified'
-            ]);
-        }
-
         if (!auth()->attempt($data)) {
             return back()->withErrors([
-                'general' => 'Invalid Username or Password'
-            ]);
+                    'general' => 'Incorrect Password'
+                ]);
         }
-        
+
+        if (auth()->attempt($data)) {
+            $user = User::where('email', $data['email'])->first();
+            if (!$user->is_verified) {
+                auth()->logout();
+                return back()->withErrors([
+                    'notVerify' => 'Account is not Verified'
+                ]);
+            }
+        }
     }
 
     public function Logout(Request $request){
@@ -93,5 +130,26 @@ class UserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/');
+    }
+
+    public function verify(Request $request){
+        $email = $request->email;
+
+        $emailChecker = User::where('email', $email)->first();
+
+        if ($emailChecker && !$emailChecker->is_verified) {
+            $otp = rand(100000, 999999);
+
+            Mail::raw("Your OTP is: $otp", function ($msg) use ($emailChecker){
+                $msg->to($emailChecker->email)->subject('Account Verification');
+            });
+            $emailChecker->update([
+                "otp" => $otp,
+                "otpExpiration" => Carbon::now()->addMinute(5)
+            ]);
+        }
+        return Inertia::render('OtpConfirmation', [
+            'email' => $emailChecker->email
+        ]);
     }
 }
