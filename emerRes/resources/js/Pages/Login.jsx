@@ -8,6 +8,14 @@ function Login(){
         e.preventDefault();
         post('/login');
     } 
+    const verify = (e, email) => {
+        e.preventDefault();
+        post('/verify', {
+            data: {
+                'email': email
+            }
+        });
+    }
     return(
         <div className="h-screen flex flex-col items-center justify-center bg-gradient-to-b from-secondary to-primary">
             <div className="mb-[100px] mt-[-100px]">
@@ -15,7 +23,7 @@ function Login(){
             </div>
 
             <div>
-                <div className="h-81 w-72 p-10 flex flex-col items-center justify-around card">
+                <div className="h-auto w-72 p-10 flex flex-col items-center justify-around card">
                     <p className="title">Login</p>
                     <form onSubmit={login}>
                         <div className="flex flex-col ">
@@ -44,6 +52,7 @@ function Login(){
                         {errors.general && <p className=" text-xs">{errors.general}</p>}
                         {errors.email && <p>{errors.email}</p>}
                         {errors.password && <p>{errors.password}</p>}
+                        {errors.notVerify && <div><p>{errors.notVerify} </p><p className="text-center underline text-black" onClick={(e) => verify(e, data.email)}>Verify now</p></div>}
                     </div>
                     
                 </div>

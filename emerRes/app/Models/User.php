@@ -20,7 +20,10 @@ class User extends Authenticatable
         'name',
         'password',
         'contact_number',
-        'email'
+        'email',
+        'otp',
+        'otpExpiration',
+        'is_verified'
     ];
     /**
      * Get the attributes that should be cast.
