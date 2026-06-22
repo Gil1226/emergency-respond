@@ -1,20 +1,15 @@
 import { router } from "@inertiajs/react";
-import NavigationBtn from "./NavigationBtn";
+import NavigationBtn from "../Components/NavigationBtn";
+import TopPanel from "../Components/TopPanel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTriangleExclamation, faKitMedical, faTruckMedical } from "@fortawesome/free-solid-svg-icons";
 
 function Dashboard() {
-    const logout = (e) => {
-        e.preventDefault();
-        router.post('/logout');
-    }
+    
     return(
         <div className="flex-col-between">
             <div>
-                <div className="h-16 shadow-md flex items-center justify-between p-5 text-primary">
-                    <p className="font-extrabold text-xl">Dashboard</p>
-                    <button onClick={(e) =>{logout(e)}}>Logout</button>
-                </div>
+                <TopPanel/>
                 <div className="flex justify-around">
                     <div className="mt-5 h-56 w-40 card shadow-primary flex-col-between justify-center items-center border border-solid">
                         <FontAwesomeIcon className="text-primary text-6xl" icon={faTriangleExclamation} />

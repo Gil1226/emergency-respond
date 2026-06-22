@@ -25,7 +25,27 @@
         @apply underline hover:text-blue-600;
     }
     .flex-col-between{
-        @apply h-[100vh] flex flex-col justify-between
+        @apply h-[100vh] flex flex-col justify-between;
+    }
+    .inputDesign{
+        @apply w-full border-0 border-b border-solid border-primary bg-transparent focus:outline-none focus:ring-0;
+    }
+    .labelPosition{
+        @apply  absolute left-2 top-4 text-[#525252]
+                transition-all duration-200
+                peer-focus:-translate-y-7
+                peer-focus:text-xs
+                peer-focus:text-primary
+                peer-placeholder-shown:translate-y-0
+                peer-[:not(:placeholder-shown)]:-translate-y-7
+                peer-[:not(:placeholder-shown)]:text-xs
+    }
+    .cardInfo{
+        @apply mt-2 h-32 border-solid border-b border-t bg-[#f1f1f1] flex justify-between p-2;
+    }
+
+    .dropdown{
+        @apply text-xs border border-solid border-primary p-2 rounded-full;
     }
 }
 
