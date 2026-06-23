@@ -10,7 +10,7 @@ function AddReportAccident({ setShowReportAccident }){
         location : "",
         relationship: "",
         severity : "",
-        picture: ""
+        picture: null
     })
     console.log(data)
     useEffect(()=>{
@@ -90,7 +90,7 @@ function AddReportAccident({ setShowReportAccident }){
                         type="file" 
                         accept="image/*"
                         capture="environment"
-                        onChange={(e) => setData("picture", e.target.value)}
+                        onChange={(e) => setData("picture", e.target.files[0])}
                     />
                 </div>
                 <input type="submit" className="hover:bg-secondary border border-solid border-secondary w-[24vw] h-11 rounded-full ml-auto mr-auto"/>
