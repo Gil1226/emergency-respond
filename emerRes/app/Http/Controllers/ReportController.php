@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Report;
+use Inertia\Inertia;
 
 class ReportController extends Controller
 {
@@ -13,7 +14,8 @@ class ReportController extends Controller
         $data = $request->validate([
             'location' => "required",
             'relationship' => "required",
-            'severity' => "required"
+            'severity' => "required",
+            'picture' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
         ]);
         
         $data['user_id'] = auth()->id();
@@ -25,7 +27,14 @@ class ReportController extends Controller
         $data['picture'] = $imagePath;
 
         Report::create($data);
-
         
+    }
+
+    public function index(){
+        $reports = Report::with('user')->get();
+
+        return Inertia::render('Respond', [
+           'reports' =>  $reports
+        ]);
     }
 }

@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/hospital', [HospitalController::class, 'index']);
 
     Route::post('/addReport', [ReportController::class, "addReport"]);
+    Route::get('/respond', [ReportController::class, "index"]);
 });
 
 Route::post('/sign-up', [UserController::class, "signUp"]);

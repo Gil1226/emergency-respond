@@ -13,4 +13,8 @@ class Report extends Model
         'severity',
         'picture'
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

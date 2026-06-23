@@ -3,9 +3,9 @@ import NavigationBtn from "../Components/NavigationBtn";
 import { useState } from "react";
 import AddReportAccident from "../Components/AddReportAccident";
 
-function Respond(){
+function Respond({reports = []}){
     const [showReportAccident, setShowReportAccident] = useState(false);
-
+    console.log(reports)
     const showForm = () => {
         setShowReportAccident(true);
     }
@@ -24,23 +24,25 @@ function Respond(){
                         <div className="absolute mt-2 h-[83vh] w-screen">
                             <AddReportAccident setShowReportAccident={setShowReportAccident}/>
                         </div> : ""
-                    }   
-                    <div>
-                        <div className="cardInfo h-44 border-primary ">
-                            <div className="">
-                                <p className="text-2xl font-bold">Severity Level:</p>
-                                <p className="text-sm mb-2">location</p>
-                                <p>Reported by:</p>
-                                <p>Contact No.:</p>
-                                <p>Relationship:</p>
-                                <p>Status(no one res)</p>
-                            </div>
-                            <div className="flex flex-col justify-between">
-                                <p className="text-sm mb-2 text-gray-500">date and time</p>
-                                <p className="text-sm mb-2 text-gray-500">Click to Respond</p>
+                    }
+                    {reports.map((report) => (
+                        <div>
+                            <div className="cardInfo h-44 border-primary ">
+                                <div className="">
+                                    <p className="text-xl font-bold">Severity Level: {report.severity}</p>
+                                    <p className="text-sm mb-2">{report.location}</p>
+                                    <p>Reported by: {report.user.name}</p>
+                                    <p>Contact No.: {report.user.contact_number}</p>
+                                    <p>Relationship: {report.relationship}</p>
+                                    <p>Status(no one res)</p>
+                                </div>
+                                <div className="flex flex-col justify-between">
+                                    <p className="text-sm mb-2 text-gray-500">{new Date(report.created_at).toLocaleDateString()} - {new Date(report.created_at).toLocaleTimeString()}</p>
+                                    <p className="text-sm mb-2 text-gray-500">Click to Respond</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    ))}   
                 </div>
             <NavigationBtn/>
         </div>
