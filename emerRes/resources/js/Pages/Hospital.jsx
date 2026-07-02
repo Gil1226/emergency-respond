@@ -26,7 +26,7 @@ function Hospital({hospitals = []}){
             <TopPanel/>
             <div className="flex flex-col flex-1 min-h-0">
                 <div className="flex justify-end">
-                    <button className="m-3 text-xs border border-solid border-primary p-2 rounded-full" onClick={addHospital}>Add Hospital</button>
+                    <button className="m-3 button-style-2" onClick={addHospital}>Add Hospital</button>
                 </div>
                 {showAddHospital ? 
                     <div className="absolute mt-2 h-[83vh] w-screen">

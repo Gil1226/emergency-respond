@@ -15,7 +15,10 @@ class ReportController extends Controller
             'location' => "required",
             'relationship' => "required",
             'severity' => "required",
-            'picture' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
+            'picture' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'description' => "nullable|string",
+            'lat' => "required",
+            'long' => "required"
         ]);
         
         $data['user_id'] = auth()->id();
@@ -37,4 +40,5 @@ class ReportController extends Controller
            'reports' =>  $reports
         ]);
     }
+
 }

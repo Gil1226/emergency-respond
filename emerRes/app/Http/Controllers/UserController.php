@@ -19,7 +19,8 @@ class UserController extends Controller
             'name' => 'required',
             'password' => 'required|min:6',
             'contact_number' => 'required',
-            'email' => 'required|email'
+            'email' => 'required|email',
+            'role' => 'required'
         ]);
 
         $emailChecker = User::where('email', $data['email'])->first();

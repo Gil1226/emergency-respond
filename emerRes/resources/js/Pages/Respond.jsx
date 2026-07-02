@@ -2,13 +2,26 @@ import TopPanel from "../Components/TopPanel";
 import NavigationBtn from "../Components/NavigationBtn";
 import { useState } from "react";
 import AddReportAccident from "../Components/AddReportAccident";
+import RespondForm from "@/Components/RespondForm";
 
 function Respond({reports = []}){
     const [showReportAccident, setShowReportAccident] = useState(false);
-    console.log(reports)
+    const [showRespondForm, setShowRespondForm] = useState(false);
+    const [reportClickedVal, setReportClickedVal] = useState();
+
     const showForm = () => {
         setShowReportAccident(true);
     }
+
+    const respond = (id) =>{
+        reports.map((report) => {
+            if (report.id == id) {
+                setReportClickedVal(report);
+            }
+        })
+        setShowRespondForm(true);
+    }
+    
     return(
         <div className="h-screen flex flex-col overflow-hidden">
             <TopPanel/>
@@ -18,31 +31,43 @@ function Respond({reports = []}){
                             <option value="active">Active</option>
                             <option value="rescued">Rescued</option>
                         </select>
-                        <button className="m-3 text-xs border border-solid border-primary p-2 rounded-full" onClick={showForm}>Report Accident</button>
+                        <button className="m-3 button-style-2" onClick={showForm}>Report Accident</button>
                     </div>
                     {showReportAccident ? 
                         <div className="absolute mt-2 h-[83vh] w-screen">
                             <AddReportAccident setShowReportAccident={setShowReportAccident}/>
                         </div> : ""
                     }
-                    {reports.map((report) => (
+                    {showRespondForm ?
                         <div>
-                            <div className="cardInfo h-44 border-primary ">
+                            <RespondForm setShowRespondForm={setShowRespondForm} reportClickedVal={reportClickedVal}/>
+                        </div> : ""
+
+                    }
+                    <div className="overflow-scroll">
+                    {reports.map((report) => (
+                        <div key={report.id} className={report.status == null ? "border-secondary": "border-third"} >
+                            <div className={report.status == null ? "border-secondary cardInfo h-44": "border-third cardInfo h-44"} >
                                 <div className="">
                                     <p className="text-xl font-bold">Severity Level: {report.severity}</p>
                                     <p className="text-sm mb-2">{report.location}</p>
                                     <p>Reported by: {report.user.name}</p>
                                     <p>Contact No.: {report.user.contact_number}</p>
                                     <p>Relationship: {report.relationship}</p>
-                                    <p>Status(no one res)</p>
+                                    <p >Status: 
+                                        <span className={report.status == null ? "text-secondary": "text-third"}>
+                                            {report.status == null ? " no one responding" : ` ${report.status} is responding`}
+                                        </span>
+                                    </p>
                                 </div>
                                 <div className="flex flex-col justify-between">
                                     <p className="text-sm mb-2 text-gray-500">{new Date(report.created_at).toLocaleDateString()} - {new Date(report.created_at).toLocaleTimeString()}</p>
-                                    <p className="text-sm mb-2 text-gray-500">Click to Respond</p>
+                                    <p className="text-sm mb-2 text-gray-500" onClick={() => respond(report.id)}>Click to Respond</p>
                                 </div>
                             </div>
                         </div>
                     ))}   
+                    </div>
                 </div>
             <NavigationBtn/>
         </div>

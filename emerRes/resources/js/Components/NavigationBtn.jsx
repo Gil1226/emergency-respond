@@ -6,16 +6,16 @@ function NavigationBtn(){
     const { url } = usePage();
     return(
         <div className="text-3xl text-white h-16 flex justify-around items-center bg-primary ">
-            <Link href="/dashboard" className={url == "/dashboard" && "text-secondary"}>
+            <Link href="/dashboard" className={url == "/dashboard" ? "text-secondary" : ""}>
                 <FontAwesomeIcon icon={faChartLine} />
             </Link>
-            <Link href="/hospital" className={url == "/hospital" && "text-secondary"}>
+            <Link href="/hospital" className={url == "/hospital" ? "text-secondary" : ""}>
                 <FontAwesomeIcon icon={faHospital} />
             </Link>
-            <Link href="/respond" className={url == "/respond" && "text-secondary"}>
+            <Link href="/respond" className={url == "/respond" ? "text-secondary" : ""}>
                 <FontAwesomeIcon icon={faTruckMedical} />
             </Link >
-            <Link href="/map" className={url == "/map" && "text-secondary"}>
+            <Link href="/map/{reportId?}" className={url.startsWith('/map') ? 'text-secondary' : ''}>
                 <FontAwesomeIcon icon={faMap} />
             </Link>
         </div>

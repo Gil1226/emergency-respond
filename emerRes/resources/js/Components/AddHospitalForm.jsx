@@ -52,7 +52,7 @@ function AddHospital({setShowAddHospital}) {
                             onChange={(e) => setData("availableAmbulance", e.target.value)}/>
                     <label className="labelPosition">Available Ambulance</label>
                 </div>
-                <input type="submit" className="hover:bg-secondary border border-solid border-secondary w-[24vw] h-11 rounded-full ml-auto mr-auto"/>
+                <input type="submit" className="button-style-2 ml-auto mr-auto w-[24vw] h-11"/>
             </form>
         </div>
     )
