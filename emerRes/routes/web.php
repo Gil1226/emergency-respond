@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HospitalController;
+use App\Http\Controllers\MapsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReportController;
@@ -36,6 +37,8 @@ Route::middleware('auth')->group(function(){
 
     Route::post('/addReport', [ReportController::class, "addReport"]);
     Route::get('/respond', [ReportController::class, "index"]);
+    
+    Route::get('/map/{reportId?}', [MapsController::class, 'index']);
 });
 
 Route::post('/sign-up', [UserController::class, "signUp"]);

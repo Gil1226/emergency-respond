@@ -10,13 +10,19 @@ function AddReportAccident({ setShowReportAccident }){
         location : "",
         relationship: "",
         severity : "",
-        picture: null
+        picture: null,
+        description: "",
+        lat: "",
+        long: ""
     })
+
     console.log(data)
     useEffect(()=>{
         const getLocation = async () => {
             const loc = await CurrentLocation();
-            setData("location", `${loc.address.neighbourhood} ${loc.address.town}, ${loc.address.state}`)
+            setData("location", `${loc.address.neighbourhood} ${loc.address.town}, ${loc.address.state}`);
+            setData('lat', loc.latitude);
+            setData('long', loc.longitude);
         }
         getLocation();
     }, []);
@@ -85,6 +91,17 @@ function AddReportAccident({ setShowReportAccident }){
                     </div>
                 </div>
                 <div>
+                    <p>Description (optional):</p>
+                    <textarea 
+                        name="description" 
+                        className="w-full"
+                        value={data.description}
+                        onChange={(e) => setData('description', e.target.value)}
+                    >
+
+                    </textarea>
+                </div>
+                <div>
                     <p>Attach Picture of Incident:</p>
                     <input 
                         type="file" 
@@ -93,7 +110,7 @@ function AddReportAccident({ setShowReportAccident }){
                         onChange={(e) => setData("picture", e.target.files[0])}
                     />
                 </div>
-                <input type="submit" className="hover:bg-secondary border border-solid border-secondary w-[24vw] h-11 rounded-full ml-auto mr-auto"/>
+                <input type="submit" className="button-style-2 w-[24vw] h-11 ml-auto mr-auto"/>
             </form>
         </div>
     )   

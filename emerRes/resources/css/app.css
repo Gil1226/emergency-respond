@@ -21,6 +21,10 @@
     .button-style{
         @apply rounded-lg bg-primary hover:bg-secondary text-white;
     }
+    .button-style-2{
+        @apply text-xs border border-solid border-primary p-2 rounded-full hover:bg-secondary;
+    }
+    
     .link{
         @apply underline hover:text-blue-600;
     }

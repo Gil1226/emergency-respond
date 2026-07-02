@@ -5,7 +5,8 @@ function Signup(){
         name: "",
         contact_number: "",
         email: "",
-        password: ""
+        password: "",
+        role: "user"
     })
 
     const signUp = (e) => {

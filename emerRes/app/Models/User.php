@@ -18,12 +18,19 @@ class User extends Authenticatable
 
     protected $fillable = [
         'name',
+        'email',
         'password',
         'contact_number',
-        'email',
         'otp',
         'otpExpiration',
-        'is_verified'
+        'is_verified',
+        'role'
+    ];
+
+    protected $hidden = [
+        'password',
+        'otp',
+        'otpExpiration',
     ];
     /**
      * Get the attributes that should be cast.

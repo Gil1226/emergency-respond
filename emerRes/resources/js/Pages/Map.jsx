@@ -3,10 +3,17 @@ import NavigationBtn from "../Components/NavigationBtn";
 import { MapContainer, TileLayer, Marker, Popup, Tooltip } from "react-leaflet";
 import { useEffect, useState } from "react";
 import CurrentLocation from "@/Utility/CurrentLocation";
+import RouteDirection from "@/Utility/routeDirection";
 
-function Map(){
+function Map({reports = [], reportId}){
     const [lat, setLat] = useState();
     const [long, setLong] = useState();
+    const [selectedReport, setSelectedReport] = useState();
+    
+
+    useEffect(() => {
+        setSelectedReport(reports.find((report) => report.id == reportId))
+    }, [reportId])
 
     useEffect(()=>{
         const getLocation = async () => {
@@ -28,7 +35,9 @@ function Map(){
             </div> 
         )
     }
-
+    const showRoute = (report) => {
+        setSelectedReport(report)
+    }
     return(
         <div className="flex-col-between">
             <TopPanel/>
@@ -40,11 +49,22 @@ function Map(){
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution="&copy; OpenStreetMap contributors"
                 />
-                <Marker position={[lat, long]}>
-                    <Tooltip permanent direction="top">
-                        asdasd
-                    </Tooltip>
-                </Marker>
+                {reports.map((report) => (
+                    <Marker position={[report.lat, report.long]} 
+                        key={report.id} 
+                        eventHandlers={{click: () => showRoute(report) }}>
+                        <Tooltip permanent direction="top">
+                            {report.severity}
+                        </Tooltip>
+                    </Marker>
+                ))}
+                {selectedReport && (
+                    <RouteDirection
+                        start={[lat, long]}
+                        end={[selectedReport.lat, selectedReport.long]}
+                    />
+                )}
+                
             </MapContainer>
             <NavigationBtn/>
         </div>

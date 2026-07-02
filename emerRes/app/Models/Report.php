@@ -11,7 +11,10 @@ class Report extends Model
         'location',
         'relationship',
         'severity',
-        'picture'
+        'picture',
+        'description',
+        'lat',
+        'long'
     ];
 
     public function user(){
