@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Hospital;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Validation\Rules\Password;
 
 class HospitalController extends Controller
 {
@@ -27,5 +29,22 @@ class HospitalController extends Controller
         return Inertia::render("Hospital", [
             'hospitals' => $hospital
         ]);
+    }
+
+    public function createAcc(Request $request){
+        $data = $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'contact_number' => 'required',
+            'password' => [
+                'required',
+                'confirmed',
+                Password::defaults(),
+            ],
+            'is_verified' => 'required',
+            'role' => 'required',
+        ]);
+
+        User::create($data);
     }
 }

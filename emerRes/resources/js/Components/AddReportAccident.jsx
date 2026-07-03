@@ -6,7 +6,7 @@ function AddReportAccident({ setShowReportAccident }){
 
     const{ auth } = usePage().props;
 
-    const {data, setData, post, processing, error} = useForm({
+    const {data, setData, post, processing, errors} = useForm({
         location : "",
         relationship: "",
         severity : "",

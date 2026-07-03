@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/map', fn () => Inertia::render('Map'));
 
     Route::post('/addHospital', [HospitalController::class, "addHospital"]);
+    Route::post("/createAcc", [HospitalController::class, "createAcc"]);
     Route::get('/hospital', [HospitalController::class, 'index']);
 
     Route::post('/addReport', [ReportController::class, "addReport"]);

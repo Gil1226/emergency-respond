@@ -2,23 +2,24 @@ import TopPanel from "../Components/TopPanel";
 import NavigationBtn from "../Components/NavigationBtn";
 import { useState } from "react";
 import AddHospital from "../Components/AddHospitalForm";
+import CreateHospitalAccount from "@/Components/CreateHospitalAccount";
 
 function Hospital({hospitals = []}){
     const [showAddHospital, setShowAddHospital] = useState(false);
-
-    const [selectedView, setSelectedView] = useState();
+    const [showCreateAcc, setShowCreateAcc] = useState(false);
+    const [selectedHospital, setSelectedHospital] = useState();
     const addHospital = () => {
-        setShowAddHospital(true);
-        
+        setShowAddHospital(true);   
     }
 
-    const viewFunc = (id) => {
+    const accountHospital = (id) => {
         hospitals.map((hospital) => {
             if (hospital.id == id) {
-                setSelectedView(hospital);
+                setSelectedHospital(hospital);
             }
         })
-        console.log(selectedView)
+        setShowCreateAcc(true);
+        
     }
 
     return(
@@ -28,11 +29,16 @@ function Hospital({hospitals = []}){
                 <div className="flex justify-end">
                     <button className="m-3 button-style-2" onClick={addHospital}>Add Hospital</button>
                 </div>
-                {showAddHospital ? 
+                {showAddHospital && (
                     <div className="absolute mt-2 h-[83vh] w-screen">
                         <AddHospital setShowAddHospital={setShowAddHospital}/>
-                    </div> : ""
-                }
+                    </div>
+                )}
+                {showCreateAcc && (
+                    <div>
+                        <CreateHospitalAccount setShowCreateAcc={setShowCreateAcc} setSelectedHospital={setSelectedHospital}/>
+                    </div>
+                )}
                 <div className="flex-1 min-h-0 overflow-y-auto">
                     {hospitals.map((hospital) => (
                         <div key={hospital.id} className="cardInfo border-primary">
@@ -45,7 +51,7 @@ function Hospital({hospitals = []}){
                                 </div>
                             </div>
                             <div className="mr-2">
-                                <button className="mb-4 ml-16 text-sm" onClick={() => viewFunc(hospital.id)}>view</button>
+                                <button className="mb-4 ml-16 text-sm" onClick={() => accountHospital(hospital.id)}>Account-&gt;</button>
                                 <p className="text-center text-xl font-bold">{hospital.availableAmbulance}</p>
                                 <p className="text-center text-sm">Available<br></br>Ambulance</p>
                             </div>
