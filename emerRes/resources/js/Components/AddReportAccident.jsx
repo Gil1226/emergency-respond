@@ -13,7 +13,8 @@ function AddReportAccident({ setShowReportAccident }){
         picture: null,
         description: "",
         lat: "",
-        long: ""
+        long: "",
+        status: "pending"
     })
 
     console.log(data)

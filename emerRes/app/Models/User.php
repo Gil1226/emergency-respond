@@ -24,7 +24,8 @@ class User extends Authenticatable
         'otp',
         'otpExpiration',
         'is_verified',
-        'role'
+        'role',
+        'hospital_id'
     ];
 
     protected $hidden = [
@@ -48,5 +49,9 @@ class User extends Authenticatable
 
     public function reports(){
         return $this->hasMany(Report::class);
+    }
+
+    public function hospital(){
+         return $this->belongsTo(Hospital::class);
     }
 }

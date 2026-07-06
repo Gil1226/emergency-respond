@@ -1,6 +1,6 @@
 import { useForm } from "@inertiajs/react"
 
-function CreateHospitalAccount({setShowCreateAcc}) {
+function CreateHospitalAccount({setShowCreateAcc, selectedHospital}) {
     const {data, setData, post, processing, errors} = useForm({
         name: "",
         email: "",
@@ -8,7 +8,8 @@ function CreateHospitalAccount({setShowCreateAcc}) {
         password: "",
         password_confirmation: "",
         is_verified: true,
-        role: ""
+        role: "",
+        hospital_id: selectedHospital.id
     })
     const createAccFunc = (e) => {
         e.preventDefault()
@@ -21,7 +22,6 @@ function CreateHospitalAccount({setShowCreateAcc}) {
             },
         });
     }
-    console.log(data)
     const close = () => {
         setShowCreateAcc(false)
     }

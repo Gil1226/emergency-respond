@@ -14,7 +14,9 @@ class Report extends Model
         'picture',
         'description',
         'lat',
-        'long'
+        'long',
+        'responded_at',
+        'status'
     ];
 
     public function user(){
