@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -36,11 +35,14 @@ class ReportController extends Controller
         
     }
 
-    public function index(){
-        $reports = Report::with('user')->get();
+    public function index(Request $request){
+        $reports = Report::with('user');
 
+        if ($request->filled('status')) {
+            $reports->where('status', $request->status);
+        }
         return Inertia::render('Respond', [
-           'reports' =>  $reports
+           'reports' =>  $reports->get()
         ]);
     }
 
@@ -50,7 +52,6 @@ class ReportController extends Controller
         if ($request->status == "ongoing") {
             if ($hospital->availableAmbulance <= 0) {
                 return back()->with('error', 'No available ambulances.');
-                
             }
             $report->status = $request->status;
             $report->respond_by = auth()->user()->name;

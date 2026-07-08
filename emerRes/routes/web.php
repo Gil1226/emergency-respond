@@ -29,8 +29,11 @@ Route::middleware('guest')->group(function(){
 Route::middleware('auth')->group(function(){
     Route::get('/dashboard', fn () => Inertia::render('Dashboard'));
     
-    Route::get('/map/{reportId?}', [MapsController::class, 'index']);
-    
+    Route::controller(MapsController::class)->group(function(){
+        Route::get('/map/{reportId?}', 'index');
+        Route::post('/eta/{report}', 'storeEta');
+    });
+   
     Route::controller(ReportController::class)->group(function(){
         Route::post('/addReport', "addReport");
         Route::get('/respond', "index");
@@ -44,10 +47,11 @@ Route::middleware('auth')->group(function(){
     });
 });
 
+Route::controller(UserController::class)->group(function(){
+    Route::post('/sign-up', "signUp");
+    Route::post('/login', "Login");
+    Route::post('/logout',"Logout"); 
+    Route::post('/otp', "Otp");
+    Route::post('/verify', "verify");
+});
 
-
-Route::post('/sign-up', [UserController::class, "signUp"]);
-Route::post('/login', [UserController::class, "Login"]);
-Route::post('/logout', [UserController::class, "Logout"]); 
-Route::post('/otp', [UserController::class, "Otp"]);
-Route::post('/verify', [UserController::class, "verify"]);

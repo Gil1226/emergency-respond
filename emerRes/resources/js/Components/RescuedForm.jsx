@@ -10,6 +10,7 @@ function RescuedForm({setShowRescuedForm, reportClickedVal}) {
         router.patch(`/respond/${reportClickedVal.id}`, {
             status: "rescued"
         })
+        setShowRescuedForm(false)
     }
     return(
         <div>
@@ -17,7 +18,7 @@ function RescuedForm({setShowRescuedForm, reportClickedVal}) {
                 <div>
                     <p className="text-2xl font-bold">Severity Level: {reportClickedVal.severity}</p>
                     <p>{reportClickedVal.location}</p>
-                    <p>Estimated Time of Arrival</p>
+                    <p>Estimated Rescued Time: {reportClickedVal.eta * 2} minutes</p>
                     <p>Status: {reportClickedVal.status}</p>
                 </div>
                 <div>
