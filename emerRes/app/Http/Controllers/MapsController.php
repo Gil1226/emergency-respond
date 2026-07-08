@@ -18,4 +18,8 @@ class MapsController extends Controller
         ]);
 
     }
+    public function storeEta(Request $request, Report $report){
+        $report->eta = $request->eta;
+        $report->save();
+    }
 }

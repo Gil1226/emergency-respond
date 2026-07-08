@@ -10,9 +10,9 @@ function TopPanel(){
     return(
         <div className="h-16 shadow-md flex items-center justify-between p-5 text-primary">
             <p className="font-extrabold text-xl">
-                {url == "/dashboard" && "Dashboard"}
-                {url == "/hospital" && "Hospital"}
-                {url == "/respond" && "Respond"}
+                {url.startsWith('/dashboard') && "Dashboard"}
+                {url.startsWith('/hospital') && "Hospital"}
+                {url.startsWith('/respond') && "Respond"}
                 {url.startsWith('/map') && "Map"}
             </p>
             <button onClick={(e) =>{logout(e)}}>Logout</button>

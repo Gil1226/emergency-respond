@@ -4,6 +4,7 @@ import { useState } from "react";
 import AddReportAccident from "../Components/AddReportAccident";
 import RespondForm from "@/Components/RespondForm";
 import RescuedForm from "@/Components/RescuedForm";
+import { router } from "@inertiajs/react";
 
 function Respond({reports = []}){
     const [showReportAccident, setShowReportAccident] = useState(false);
@@ -37,8 +38,8 @@ function Respond({reports = []}){
     const sortingFunc = (e) => {
         const option = e.target.value
         setSort(option);
-
-        route.get('/respond', {
+        console.log(reports)
+        router.get('/respond', {
             status: option
         },{
             preserveState: true,
@@ -47,71 +48,76 @@ function Respond({reports = []}){
     }
 
     return(
-        <div className="h-screen flex flex-col overflow-hidden">
-            <TopPanel/>
-                <div className="flex flex-col flex-1 min-h-0">
-                    <div className="flex justify-end">
-                        <select name="sort" className="m-3 w-24 dropdown" onChange={(e) => sortingFunc(e)}>
-                            <option value="pending">Pending</option>
-                            <option value="ongoing">Ongoing</option>
-                            <option value="rescued">Rescued</option>
-                        </select>
-                        <button className="m-3 button-style-2" onClick={showForm}>Report Accident</button>
-                    </div>
-                    {showReportAccident ? 
-                        <div className="absolute mt-2 h-[83vh] w-screen">
-                            <AddReportAccident setShowReportAccident={setShowReportAccident}/>
-                        </div> : ""
-                    }
-                    {showRespondForm ?
-                        <div>
-                            <RespondForm setShowRespondForm={setShowRespondForm} reportClickedVal={reportClickedVal}/>
-                        </div> : ""
+        <div className="md:bg-slate-950">
+            <div className="h-screen flex flex-col overflow-hidden m-auto md:w-1/4 md:bg-white">
+                <TopPanel/>
+                    <div className="flex flex-col flex-1 min-h-0">
+                        <div className="flex justify-end">
+                            <select name="sort" className="m-3 w-24 dropdown" value={sort} onChange={(e) => sortingFunc(e)}>
+                                <option value="">All</option>
+                                <option value="pending">Pending</option>
+                                <option value="ongoing">Ongoing</option>
+                                <option value="rescued">Rescued</option>
+                            </select>
+                            <button className="m-3 button-style-2" onClick={showForm}>Report Accident</button>
+                        </div>
+                        
+                        {showReportAccident ? 
+                            <div className="absolute mt-2 h-[83vh] w-screen">
+                                <AddReportAccident setShowReportAccident={setShowReportAccident}/>
+                            </div> : ""
+                        }
 
-                    }
-                    {showRescuedForm ?
-                        <div>
-                            <RescuedForm setShowRescuedForm={setShowRescuedForm} reportClickedVal={reportClickedVal}/>
-                        </div> : ""
+                        {showRespondForm ?
+                            <div>
+                                <RespondForm setShowRespondForm={setShowRespondForm} reportClickedVal={reportClickedVal}/>
+                            </div> : ""
+                        }
 
-                    }
-                    <div className="overflow-scroll">
-                    {reports.map((report) => (
-                        <div key={report.id}>
-                            <div className={report.status == 'pending' && "border-secondary cardInfo h-44" 
-                                            || report.status == 'ongoing' && "border-third cardInfo h-44" 
-                                            || report.status == 'rescued' && "cardInfo h-44"}
-                                 onClick={report.status == "rescued" ? () => rescued(report.id) : undefined}>
-                                <div className="">
-                                    <p className="text-xl font-bold">Severity Level: {report.severity}</p>
-                                    <p className="text-sm mb-2">{report.location}</p>
-                                    <p>Reported by: {report.user.name}</p>
-                                    <p>Contact No.: {report.user.contact_number}</p>
-                                    <p>Relationship: {report.relationship}</p>
-                                    <p >Responding: 
-                                        <span className={report.status == 'pending' && "text-secondary" 
-                                                        || report.status == 'ongoing' && "text-third" 
-                                                        || report.status == 'rescued' && ""
-                                        }>
-                                            {report.respond_by == null ? " no one" : `${report.respond_by}`}
-                                        </span>
-                                    </p>
-                                </div>
-                                <div className="flex flex-col justify-between">
-                                    <p className="text-sm mb-2 text-gray-500">{new Date(report.created_at).toLocaleDateString()} - {new Date(report.created_at).toLocaleTimeString()}</p>
-                                    {report.status == 'pending' &&
-                                        <p className="text-sm mb-2 text-gray-500" onClick={() => respond(report.id)}>Click to Respond</p>
-                                    }
-                                    {report.status == "ongoing" &&
-                                        <p className="text-sm mb-2 text-gray-500" onClick={() => rescued(report.id)}>View Respond</p>
-                                    }
+                        {showRescuedForm ?
+                            <div>
+                                <RescuedForm setShowRescuedForm={setShowRescuedForm} reportClickedVal={reportClickedVal}/>
+                            </div> : ""
+                        }
+
+                        <div className="overflow-scroll scrollbar-hide">
+                        {reports.map((report) => (
+                            <div key={report.id}>
+                                <div className={report.status == 'pending' && "border-secondary cardInfo h-44" 
+                                                || report.status == 'ongoing' && "border-third cardInfo h-44" 
+                                                || report.status == 'rescued' && "cardInfo h-44"}
+                                    onClick={report.status == "rescued" ? () => rescued(report.id) : undefined}>
+                                    <div className="">
+                                        <p className="text-xl font-bold">Severity Level: {report.severity}</p>
+                                        <p className="text-sm mb-2">{report.location}</p>
+                                        <p>Reported by: {report.user.name}</p>
+                                        <p>Contact No.: {report.user.contact_number}</p>
+                                        <p>Relationship: {report.relationship}</p>
+                                        <p >Responding: 
+                                            <span className={report.status == 'pending' && "text-secondary" 
+                                                            || report.status == 'ongoing' && "text-third" 
+                                                            || report.status == 'rescued' && ""
+                                            }>
+                                                {report.respond_by == null ? " no one" : `${report.respond_by}`}
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div className="flex flex-col justify-between">
+                                        <p className="text-sm mb-2 text-gray-500">{new Date(report.created_at).toLocaleDateString()} - {new Date(report.created_at).toLocaleTimeString()}</p>
+                                        {report.status == 'pending' &&
+                                            <p className="text-sm mb-2 text-gray-500" onClick={() => respond(report.id)}>Click to Respond</p>
+                                        }
+                                        {report.status == "ongoing" &&
+                                            <p className="text-sm mb-2 text-gray-500" onClick={() => rescued(report.id)}>View Respond</p>
+                                        }
+                                    </div>
                                 </div>
                             </div>
+                        ))}   
                         </div>
-                    ))}   
                     </div>
-                </div>
-            <NavigationBtn/>
+                <NavigationBtn/>
+            </div>
         </div>
     )   
 }
