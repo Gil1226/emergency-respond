@@ -13,7 +13,7 @@ function TopPanel(){
                 {url == "/dashboard" && "Dashboard"}
                 {url == "/hospital" && "Hospital"}
                 {url == "/respond" && "Respond"}
-                {url == "/map" && "Map"}
+                {url.startsWith('/map') && "Map"}
             </p>
             <button onClick={(e) =>{logout(e)}}>Logout</button>
         </div>

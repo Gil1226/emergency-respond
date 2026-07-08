@@ -36,7 +36,7 @@ function Hospital({hospitals = []}){
                 )}
                 {showCreateAcc && (
                     <div>
-                        <CreateHospitalAccount setShowCreateAcc={setShowCreateAcc} setSelectedHospital={setSelectedHospital}/>
+                        <CreateHospitalAccount setShowCreateAcc={setShowCreateAcc} selectedHospital={selectedHospital}/>
                     </div>
                 )}
                 <div className="flex-1 min-h-0 overflow-y-auto">

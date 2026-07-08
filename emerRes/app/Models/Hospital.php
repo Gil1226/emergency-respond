@@ -13,4 +13,9 @@ class Hospital extends Model
         "availableICUBed",
         "availableAmbulance"
     ];
+
+    public function user() {
+        return $this->hasMany(User::class);
+    }
+
 }

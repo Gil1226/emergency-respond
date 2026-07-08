@@ -28,19 +28,23 @@ Route::middleware('guest')->group(function(){
 
 Route::middleware('auth')->group(function(){
     Route::get('/dashboard', fn () => Inertia::render('Dashboard'));
-    Route::get('/hospital', fn () => Inertia::render('Hospital'));
-    Route::get('/respond', fn () => Inertia::render('Respond'));
-    Route::get('/map', fn () => Inertia::render('Map'));
-
-    Route::post('/addHospital', [HospitalController::class, "addHospital"]);
-    Route::post("/createAcc", [HospitalController::class, "createAcc"]);
-    Route::get('/hospital', [HospitalController::class, 'index']);
-
-    Route::post('/addReport', [ReportController::class, "addReport"]);
-    Route::get('/respond', [ReportController::class, "index"]);
     
     Route::get('/map/{reportId?}', [MapsController::class, 'index']);
+    
+    Route::controller(ReportController::class)->group(function(){
+        Route::post('/addReport', "addReport");
+        Route::get('/respond', "index");
+        Route::patch('/respond/{report}', "updateStatus");
+    });
+
+    Route::controller(HospitalController::class)->group(function(){
+        Route::post('/addHospital', "addHospital");
+        Route::post("/createAcc", "createAcc");
+        Route::get('/hospital', 'index');
+    });
 });
+
+
 
 Route::post('/sign-up', [UserController::class, "signUp"]);
 Route::post('/login', [UserController::class, "Login"]);

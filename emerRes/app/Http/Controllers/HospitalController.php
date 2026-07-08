@@ -43,6 +43,7 @@ class HospitalController extends Controller
             ],
             'is_verified' => 'required',
             'role' => 'required',
+            'hospital_id' => 'required'
         ]);
 
         User::create($data);
