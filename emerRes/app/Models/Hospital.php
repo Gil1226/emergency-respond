@@ -9,9 +9,8 @@ class Hospital extends Model
     protected $fillable = [
         "hospitalName",
         "hospitalAddress", 
-        "availableERBed",
-        "availableICUBed",
-        "availableAmbulance"
+        "availableAmbulance",
+        "contact_number"
     ];
 
     public function user() {

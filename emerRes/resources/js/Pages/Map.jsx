@@ -57,8 +57,49 @@ function Map({reports = [], reportId}){
     }
     return(
         <div className="md:bg-slate-950">
-            <div className="flex-col-between m-auto md:w-1/4 md:bg-white">
+            <div className="flex-col-between m-auto md:w-[27rem] md:bg-white">
                 <TopPanel/>
+                {selectedReport && (
+                    <div className="left-4 right-4 z-[1000] bg-white rounded-xl shadow-xl p-4 w-[27rem]">
+
+                        <div className="flex justify-between items-center">
+                            <div className="flex justify-between w-full">
+                                <h2 className="text-sm font-bold">
+                                    {selectedReport.severity}
+                                </h2>
+                                <p className="text-sm text-gray-500">
+                                    Report #{selectedReport.id}
+                                </p>
+                            </div>
+                        </div>
+                        {eta && (
+                            <div className="grid grid-cols-2 gap-4 mt-2">
+
+                                <div className="bg-blue-50 rounded-lg p-1 text-center">
+                                    <p className="text-xs uppercase text-gray-500">
+                                        ETA
+                                    </p>
+
+                                    <h2 className="text-md font-bold text-blue-600">
+                                        {eta.eta} min
+                                    </h2>
+                                </div>
+
+                                <div className="bg-green-50 rounded-lg text-center">
+                                    <p className="text-xs uppercase text-gray-500">
+                                        Distance
+                                    </p>
+
+                                    <h2 className="text-md font-bold text-green-600">
+                                        {eta.distance} km
+                                    </h2>
+                                </div>
+
+                            </div>
+                        )}
+
+                    </div>
+                )}
                 <MapContainer 
                     center={[lat, long]}
                     zoom={12}
