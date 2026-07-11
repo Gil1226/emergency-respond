@@ -3,58 +3,86 @@ import NavigationBtn from "../Components/NavigationBtn";
 import { useState } from "react";
 import AddHospital from "../Components/AddHospitalForm";
 import CreateHospitalAccount from "@/Components/CreateHospitalAccount";
+import ViewHospital from "@/Components/ViewHospital";
 
 function Hospital({hospitals = []}){
     const [showAddHospital, setShowAddHospital] = useState(false);
-    const [showCreateAcc, setShowCreateAcc] = useState(false);
+    const [showViewHospital, setShowViewHospital] = useState(false);
     const [selectedHospital, setSelectedHospital] = useState();
+    
+
     const addHospital = () => {
         setShowAddHospital(true);   
     }
 
-    const accountHospital = (id) => {
+    const viewHospital = (id) => {
         hospitals.map((hospital) => {
             if (hospital.id == id) {
                 setSelectedHospital(hospital);
             }
         })
-        setShowCreateAcc(true);
+        setShowViewHospital(true);
         
     }
 
     return(
         <div className="md:bg-slate-950">
-            <div className="h-screen flex flex-col overflow-hidden m-auto md:w-1/4 md:bg-white">
+            <div className="h-screen flex flex-col overflow-hidden m-auto md:w-[27rem] md:bg-white">
                 <TopPanel/>
-                <div className="flex flex-col flex-1 min-h-0">
-                    <div className="flex justify-end">
+                <div className="flex flex-col flex-1 min-h-0 ">
+                    <div className="flex justify-end border-b-2">
                         <button className="m-3 button-style-2" onClick={addHospital}>Add Hospital</button>
                     </div>
                     {showAddHospital && (
-                        <div className="absolute mt-2 h-[83vh] w-screen">
+                        <div>
                             <AddHospital setShowAddHospital={setShowAddHospital}/>
                         </div>
                     )}
-                    {showCreateAcc && (
+                    
+                    {showViewHospital &&
                         <div>
-                            <CreateHospitalAccount setShowCreateAcc={setShowCreateAcc} selectedHospital={selectedHospital}/>
+                            <ViewHospital setShowViewHospital={setShowViewHospital} selectedHospital={selectedHospital}/>
                         </div>
-                    )}
-                    <div className="flex-1 min-h-0 overflow-y-auto scrollbar-hide">
+                    }
+
+                    <div className="flex-1 min-h-0 overflow-y-auto scrollbar-hide space-y-4 p-5">
                         {hospitals.map((hospital) => (
-                            <div key={hospital.id} className="cardInfo border-primary">
-                                <div>
-                                    <p className="text-2xl font-bold">{hospital.hospitalName}</p>
-                                    <p className="text-sm mb-2">{hospital.hospitalAddress}</p>
-                                    <div className="ml-4">
-                                        <p>Available ER bed:{hospital.availableERBed}</p>
-                                        <p>Available ICU bed:{hospital.availableICUBed}</p>
-                                    </div>
+                            <div
+                                key={hospital.id}
+                                className="bg-white shadow-primary rounded-2xl shadow-xl hover:bg-gray-200 transition-all duration-200 p-5 flex justify-between"
+                            >
+                                <div className="flex-1">
+                                    <h2 className="text-xl font-bold text-gray-800">
+                                        {hospital.hospitalName}
+                                    </h2>
+
+                                    <p className="text-sm text-gray-500 mt-1">
+                                        📍 {hospital.hospitalAddress}
+                                    </p>
+
+                                    <p className="text-sm text-gray-500 flex items-center gap-2">
+                                        📞
+                                        <span>{hospital.contact_number}</span>
+                                    </p>
                                 </div>
-                                <div className="mr-2">
-                                    <button className="mb-4 ml-16 text-sm" onClick={() => accountHospital(hospital.id)}>Account-&gt;</button>
-                                    <p className="text-center text-xl font-bold">{hospital.availableAmbulance}</p>
-                                    <p className="text-center text-sm">Available<br></br>Ambulance</p>
+
+                                <div className="flex flex-col justify-between items-center ml-6">
+                                    <button
+                                        onClick={() => viewHospital(hospital.id)}
+                                        className="text-primary font-semibold hover:underline"
+                                    >
+                                        View →
+                                    </button>
+
+                                    <div className="bg-green-50 rounded-xl px-6 py-4 text-center">
+                                        <p className="text-4xl font-bold text-green-600">
+                                            {hospital.availableAmbulance}
+                                        </p>
+
+                                        <p className="text-sm text-gray-600 font-medium">
+                                            Available <br></br>Ambulances
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         ))}

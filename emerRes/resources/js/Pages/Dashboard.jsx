@@ -8,7 +8,7 @@ function Dashboard() {
     
     return(
         <div className="md:bg-slate-950">
-            <div className="flex-col-between m-auto md:w-1/4 md:bg-white">
+            <div className="flex-col-between m-auto md:w-[27rem] md:bg-white">
                 <div>
                     <TopPanel/>
                     <div className="flex justify-around">

@@ -14,9 +14,8 @@ class HospitalController extends Controller
         $data = $request->validate([
             "hospitalName" => "required",
             "hospitalAddress" => "required", 
-            "availableERBed" => "required",
-            "availableICUBed" => "required",
-            "availableAmbulance"=> "required"
+            "availableAmbulance"=> "required",
+            "contact_number" => "required"
         ]);
 
         Hospital::create($data);

@@ -16,7 +16,7 @@ class ReportController extends Controller
             'location' => "required",
             'relationship' => "required",
             'severity' => "required",
-            'picture' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'picture' => 'required|image|mimes:jpg,jpeg,png|max:5120',
             'description' => "nullable|string",
             'lat' => "required",
             'long' => "required",
@@ -56,15 +56,17 @@ class ReportController extends Controller
             $report->status = $request->status;
             $report->respond_by = auth()->user()->name;
             $report->responded_at = now();
+            $hospital->decrement('availableAmbulance');
             $report->save();
 
-            $hospital->decrement('availableAmbulance');
+            
         }elseif ($request->status == "rescued") {
             $report->status = $request->status;
             $report->rescued_at = now();
+            $hospital->increment('availableAmbulance');
             $report->save();
 
-            $hospital->increment('availableAmbulance');
+            
         }
         
     }
