@@ -233,7 +233,7 @@ https://github.com/Gil1226
 
 # 📄 License
 
-This project is intended for educational and capstone purposes.
+This project is intended for self learning purposes.
 
 ---
 
