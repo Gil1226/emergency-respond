@@ -1,4 +1,5 @@
 import { useForm } from "@inertiajs/react";
+import Swal from "sweetalert2";
 
 function AddHospital({setShowAddHospital}) {
     const close = () => {
@@ -14,8 +15,26 @@ function AddHospital({setShowAddHospital}) {
 
     const addHospitaFunc = (e) => {
         e.preventDefault();
-        post("/addHospital")
-        setShowAddHospital(false);
+        post("/addHospital", {
+            onSuccess: () => {
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Hospital Added',
+                    icon: 'success',
+                    confirmButtonText: 'ok'
+                })
+                setShowAddHospital(false);
+            },
+
+            onError: (errors) => {
+                Swal.fire({
+                    title: 'error',
+                    text: Object.values(errors)[0] || errors,
+                    icon: 'error',
+                    confirmButtonText: 'ok'
+                })
+            }
+        })
     }
     return(
         <div className="bg-[#f5f6fa] rounded-2xl shadow-xl h-[77vh] p-8 overflow-y-auto">

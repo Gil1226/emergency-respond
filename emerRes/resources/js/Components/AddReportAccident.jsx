@@ -1,6 +1,7 @@
 import { useForm, usePage } from "@inertiajs/react";
 import CurrentLocation from "@/Utility/CurrentLocation";
 import { useEffect } from "react";
+import Swal from 'sweetalert2';
 
 function AddReportAccident({ setShowReportAccident }){
 
@@ -37,11 +38,22 @@ function AddReportAccident({ setShowReportAccident }){
             forceFormData: true,
 
             onSuccess: () => {
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Report Added',
+                    icon: 'success',
+                    confirmButtonText: 'ok'
+                })
                 setShowReportAccident(false)
             },
 
-            onError: (error) => {
-                console.log(error);
+            onError: (errors) => {
+                Swal.fire({
+                    title: 'error',
+                    text: Object.values(errors)[0] || errors,
+                    icon: 'error',
+                    confirmButtonText: 'ok'
+                })
             }
         });
 

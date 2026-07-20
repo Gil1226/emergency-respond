@@ -1,4 +1,5 @@
-import { useForm } from "@inertiajs/react"
+import { useForm } from "@inertiajs/react";
+import Swal from "sweetalert2";
 
 function CreateHospitalAccount({setShowCreateAcc, selectedHospital}) {
     const {data, setData, post, processing, errors} = useForm({
@@ -14,18 +15,28 @@ function CreateHospitalAccount({setShowCreateAcc, selectedHospital}) {
     const createAccFunc = (e) => {
         e.preventDefault()
         post("/createAcc", {
-            onError: (errors) => {
-                console.log(errors);
-            },
             onSuccess: () => {
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Account Created',
+                    icon: 'success',
+                    confirmButtonText: 'ok'
+                })
                 setShowCreateAcc(false);
             },
+            onError: (errors) => {
+                Swal.fire({
+                    title: 'error',
+                    text: Object.values(errors)[0] || errors,
+                    icon: 'error',
+                    confirmButtonText: 'ok'
+                })
+            }
         });
     }
     const close = () => {
         setShowCreateAcc(false)
     }
-
 
     return(
         <div className="bg-[#f5f6fa] rounded-2xl shadow-xl p-8">
