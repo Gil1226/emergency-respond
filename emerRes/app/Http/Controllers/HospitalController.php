@@ -56,4 +56,9 @@ class HospitalController extends Controller
             "contact_number" => $request->contact_number,
         ]);
     }
+    public function deleteHospital(Hospital $hospital){
+        $hospital->delete();
+    }
+
+    
 }

@@ -50,6 +50,38 @@ function ViewHospital({ setShowViewHospital, selectedHospital, setSelectedHospit
         });
     }
 
+    const deleteFunc = async() => {
+        const result = await Swal.fire({
+            title: "Delete Hospital?",
+            text: "This action cannot be undone.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Delete",
+            cancelButtonText: "Cancel"
+        });
+
+        if (!result.isConfirmed) return;
+        router.delete(`/hospital/${selectedHospital.id}/delete`, {
+            onSuccess: () => {
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Deleted Successfully',
+                    icon: 'success',
+                    confirmButtonText: 'ok'
+                })
+                setShowViewHospital(false)
+            },
+            onError: () => {
+                Swal.fire({
+                    title: 'error',
+                    text: 'Delete Failed',
+                    icon: 'error',
+                    confirmButtonText: 'ok'
+                })
+            }
+        })
+    }
+
     return (
         <>
             {showCreateAcc && (
@@ -80,7 +112,8 @@ function ViewHospital({ setShowViewHospital, selectedHospital, setSelectedHospit
                             Edit
                         </button>
 
-                        <button className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg font-medium">
+                        <button className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg font-medium"
+                                onClick={deleteFunc}>
                             Delete
                         </button>
                     </div>
