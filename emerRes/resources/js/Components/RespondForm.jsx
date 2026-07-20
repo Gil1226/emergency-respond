@@ -1,4 +1,6 @@
 import { router } from '@inertiajs/react';
+import Swal from "sweetalert2";
+
 function RespondForm({setShowRespondForm, reportClickedVal}) {
 
     const close = () => {
@@ -8,9 +10,26 @@ function RespondForm({setShowRespondForm, reportClickedVal}) {
     const respond = () => {
         router.patch(`/respond/${reportClickedVal.id}`, {
             status: "ongoing"
+        },{
+            onSuccess: () => {
+                Swal.fire({
+                    title: 'Success',
+                    icon: 'success',
+                    confirmButtonText: 'ok'
+                })
+                router.get(`/map/${reportClickedVal.id}`);
+                setShowRespondForm(false);
+            },
+            onError: (errors) => {
+                Swal.fire({
+                    title: 'error',
+                    text: errors,
+                    icon: 'error',
+                    confirmButtonText: 'ok'
+                })
+            }
         });
-        router.get(`/map/${reportClickedVal.id}`);
-        setShowRespondForm(false);
+        
     }
 
     return(

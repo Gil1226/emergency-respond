@@ -105,7 +105,7 @@ function Respond({reports = []}){
 
                                         <div>
                                             <h2 className="text-2xl font-bold text-gray-800">
-                                                {report.severity} Severity
+                                                Severity: {report.severity} 
                                             </h2>
 
                                             <p className="text-gray-500 mt-1">
@@ -118,12 +118,12 @@ function Respond({reports = []}){
 
                                             ${
                                                 report.status === "pending"
-                                                    ? "bg-secondary text-primary"
+                                                    ? "bg-secondary text-white"
 
                                                     : report.status === "ongoing"
-                                                    ? "bg-blue-100 text-blue-700"
+                                                    ? "bg-blue-400 text-white"
 
-                                                    : "bg-green-100 text-green-700"
+                                                    : "bg-green-700 text-white"
                                             }`}
                                         >
                                             {report.status.toUpperCase()}

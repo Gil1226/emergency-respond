@@ -1,5 +1,5 @@
-import { router } from "@inertiajs/react"
-
+import { router } from "@inertiajs/react";
+import Swal from "sweetalert2";
 function RescuedForm({setShowRescuedForm, reportClickedVal}) {
 
     const close = () => {
@@ -9,8 +9,25 @@ function RescuedForm({setShowRescuedForm, reportClickedVal}) {
     const rescued = () => {
         router.patch(`/respond/${reportClickedVal.id}`, {
             status: "rescued"
+        }, {
+            onSuccess: () => {
+                Swal.fire({
+                    title: 'Success',
+                    icon: 'success',
+                    confirmButtonText: 'ok'
+                })
+                setShowRescuedForm(false)
+            },
+            onError: (errors) => {
+                Swal.fire({
+                    title: 'error',
+                    text: errors,
+                    icon: 'error',
+                    confirmButtonText: 'ok'
+                })
+            }
         })
-        setShowRescuedForm(false)
+        
     }
     return(
         <div>

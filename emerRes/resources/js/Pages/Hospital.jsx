@@ -41,7 +41,7 @@ function Hospital({hospitals = []}){
                     
                     {showViewHospital &&
                         <div>
-                            <ViewHospital setShowViewHospital={setShowViewHospital} selectedHospital={selectedHospital}/>
+                            <ViewHospital setShowViewHospital={setShowViewHospital} selectedHospital={selectedHospital} setSelectedHospital={setSelectedHospital}/>
                         </div>
                     }
 

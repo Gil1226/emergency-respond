@@ -47,4 +47,18 @@ class HospitalController extends Controller
 
         User::create($data);
     }
+
+    public function editHospital(Request $request, Hospital $hospital){
+        $hospital->update([
+            "hospitalName" => $request->hospitalName,
+            "hospitalAddress" => $request->hospitalAddress, 
+            "availableAmbulance"=> $request->availableAmbulance,
+            "contact_number" => $request->contact_number,
+        ]);
+    }
+    public function deleteHospital(Hospital $hospital){
+        $hospital->delete();
+    }
+
+    
 }
