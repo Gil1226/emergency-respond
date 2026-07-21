@@ -2,14 +2,12 @@ import TopPanel from "../Components/TopPanel";
 import NavigationBtn from "../Components/NavigationBtn";
 import { useState } from "react";
 import AddHospital from "../Components/AddHospitalForm";
-import CreateHospitalAccount from "@/Components/CreateHospitalAccount";
 import ViewHospital from "@/Components/ViewHospital";
 
 function Hospital({hospitals = []}){
     const [showAddHospital, setShowAddHospital] = useState(false);
     const [showViewHospital, setShowViewHospital] = useState(false);
     const [selectedHospital, setSelectedHospital] = useState();
-    
 
     const addHospital = () => {
         setShowAddHospital(true);   
@@ -41,10 +39,9 @@ function Hospital({hospitals = []}){
                     
                     {showViewHospital &&
                         <div>
-                            <ViewHospital setShowViewHospital={setShowViewHospital} selectedHospital={selectedHospital} setSelectedHospital={setSelectedHospital}/>
+                            <ViewHospital setShowViewHospital={setShowViewHospital} selectedHospital={selectedHospital} setSelectedHospital={setSelectedHospital} />
                         </div>
                     }
-
                     <div className="flex-1 min-h-0 overflow-y-auto scrollbar-hide space-y-4 p-5">
                         {hospitals.map((hospital) => (
                             <div

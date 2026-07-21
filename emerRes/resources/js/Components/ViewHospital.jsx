@@ -1,10 +1,12 @@
 import CreateHospitalAccount from "./CreateHospitalAccount";
+import ViewHospitalAcc from "./ViewHospitalAcc";
 import { useState } from "react";
 import { router } from "@inertiajs/react";
 import Swal from "sweetalert2";
 
 function ViewHospital({ setShowViewHospital, selectedHospital, setSelectedHospital}) {
     const [showCreateAcc, setShowCreateAcc] = useState(false);
+    const [showViewAcc, setShowViewAcc] = useState(false)
     const [isEdit, setIsEdit] = useState(false);
     const [hospitalEditInfo, setHospitalEditInfo] = useState({
         hospitalName: selectedHospital.hospitalName,
@@ -59,9 +61,8 @@ function ViewHospital({ setShowViewHospital, selectedHospital, setSelectedHospit
             confirmButtonText: "Delete",
             cancelButtonText: "Cancel"
         });
-
         if (!result.isConfirmed) return;
-        router.delete(`/hospital/${selectedHospital.id}/delete`, {
+        router.delete(`/hospital/${selectedHospital.id}`, {
             onSuccess: () => {
                 Swal.fire({
                     title: 'Success',
@@ -81,11 +82,19 @@ function ViewHospital({ setShowViewHospital, selectedHospital, setSelectedHospit
             }
         })
     }
-
+    const viewAccListFunc = () => {
+        setShowViewAcc(true);
+    }
     return (
         <>
+            {showViewAcc &&
+                <div className="fixed inset-0  flex items-center justify-center z-50">
+                    <ViewHospitalAcc setShowViewAcc={setShowViewAcc} selectedHospitalId={selectedHospital.id}/>
+                </div>
+            }
+            
             {showCreateAcc && (
-                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                <div className="fixed inset-0  flex items-center justify-center z-50">
                     <CreateHospitalAccount
                         setShowCreateAcc={setShowCreateAcc}
                         selectedHospital={selectedHospital}
@@ -230,7 +239,8 @@ function ViewHospital({ setShowViewHospital, selectedHospital, setSelectedHospit
                                 + Add Account
                             </button>
 
-                            <button className="bg-gray-700 hover:bg-gray-800 text-white px-6 py-3 rounded-lg font-medium">
+                            <button className="bg-gray-700 hover:bg-gray-800 text-white px-6 py-3 rounded-lg font-medium"
+                                    onClick={viewAccListFunc}>
                                 View Account List
                             </button>
                         </div>
