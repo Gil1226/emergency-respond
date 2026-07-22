@@ -45,7 +45,9 @@ Route::middleware('auth')->group(function(){
         Route::post("/createAcc", "createAcc");
         Route::get('/hospital', 'index');
         Route::put('/hospital/{hospital}', 'editHospital');
-        Route::delete('/hospital/{hospital}/delete', 'deleteHospital');
+        Route::delete('/hospital/{hospital}', 'deleteHospital');
+        Route::get('/hospital/{hospital}', 'viewHospitalAcc');
+        Route::delete('/hospital/{user}/Account', 'deleteAccount');
     });
 });
 
