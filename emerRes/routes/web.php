@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function(){
         Route::put('/hospital/{hospital}', 'editHospital');
         Route::delete('/hospital/{hospital}', 'deleteHospital');
         Route::get('/hospital/{hospital}', 'viewHospitalAcc');
+        Route::delete('/hospital/{user}/Account', 'deleteAccount');
     });
 });
 

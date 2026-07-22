@@ -64,4 +64,8 @@ class HospitalController extends Controller
         $hospital->load('user');
         return response()->json($hospital);
     }
+
+    public function deleteAccount(User $user){
+        $user->delete();
+    }
 }
