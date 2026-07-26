@@ -5,6 +5,7 @@ use App\Http\Controllers\MapsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -27,8 +28,10 @@ Route::middleware('guest')->group(function(){
 });
 
 Route::middleware('auth')->group(function(){
-    Route::get('/dashboard', fn () => Inertia::render('Dashboard'));
     
+    Route::controller(DashboardController::class)->group(function(){
+        Route::get('/dashboard', "index");
+    });
     Route::controller(MapsController::class)->group(function(){
         Route::get('/map/{reportId?}', 'index');
         Route::post('/eta/{report}', 'storeEta');

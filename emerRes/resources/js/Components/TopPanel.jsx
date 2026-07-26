@@ -8,7 +8,7 @@ function TopPanel(){
         router.post('/logout');
     }
     return(
-        <div className="h-16 shadow-md flex items-center justify-between p-5 text-primary">
+        <div className="h-16 shadow-md flex items-center justify-between p-5 text-primary z-50">
             <p className="font-extrabold text-xl">
                 {url.startsWith('/dashboard') && "Dashboard"}
                 {url.startsWith('/hospital') && "Hospital"}

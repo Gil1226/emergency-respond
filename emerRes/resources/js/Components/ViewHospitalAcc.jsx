@@ -46,7 +46,6 @@ function ViewHospitalAcc({setShowViewAcc, selectedHospitalId}){
         })
     }
 
-
     return(
         <>
             <div className="h-[27rem] rounded-2xl bg-[#f5f6fa] p-8 shadow-xl overflow-scroll scrollbar-hide">
