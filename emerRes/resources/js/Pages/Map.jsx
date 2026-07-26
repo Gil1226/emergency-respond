@@ -97,7 +97,13 @@ function Map({reports = [], reportId}){
 
                             </div>
                         )}
-
+                        <button
+                            type="button"
+                            onClick={() => setSelectedReport(null)}
+                            className="mt-4 w-full rounded-lg bg-gray-100 px-4 py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-200 active:scale-[0.98]"
+                        >
+                            ← Back
+                        </button>
                     </div>
                 )}
                 <MapContainer 
@@ -108,7 +114,7 @@ function Map({reports = [], reportId}){
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         attribution="&copy; OpenStreetMap contributors"
                     />
-                    {reports.map((report) => (
+                    {!selectedReport && reports.map((report) => (
                         report.status !== "rescued" &&
                         <Marker position={[report.lat, report.long]} 
                             key={report.id} 

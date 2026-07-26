@@ -70,7 +70,7 @@ function Respond({reports = []}){
 
                         {showRespondForm ?
                             <div>
-                                <RespondForm setShowRespondForm={setShowRespondForm} reportClickedVal={reportClickedVal}/>
+                                <RespondForm setShowRespondForm={setShowRespondForm} reportClickedVal={reportClickedVal} reports={reports}/>
                             </div> : ""
                         }
 

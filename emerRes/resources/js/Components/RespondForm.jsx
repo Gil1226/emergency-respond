@@ -1,13 +1,25 @@
-import { router } from '@inertiajs/react';
+import { router, usePage } from '@inertiajs/react';
 import Swal from "sweetalert2";
 
-function RespondForm({setShowRespondForm, reportClickedVal}) {
+function RespondForm({setShowRespondForm, reportClickedVal, reports = []}) {
+    const { auth } = usePage().props;
 
     const close = () => {
         setShowRespondForm(false)
     }
-
+    console.log(reports)
     const respond = () => {
+
+        if (reports.some(report => report.respond_by == auth.user.name && report.status === "ongoing")){
+                Swal.fire({
+                    title: 'warning',
+                    text: "You are already responding to another report.",
+                    icon: 'warning',
+                    confirmButtonText: 'ok'
+                })
+                return;
+            };
+
         router.patch(`/respond/${reportClickedVal.id}`, {
             status: "ongoing"
         },{
