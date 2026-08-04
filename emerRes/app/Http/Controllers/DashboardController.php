@@ -10,7 +10,7 @@ use Inertia\Inertia;
 class DashboardController extends Controller
 {
     public function index(){
-        $report = Report::with('user')->select('id', 'severity', 'status', 'location', 'user_id', 'respond_by', "responded_at", "rescued_at", "eta");
+        $report = Report::with('user');
 
         return Inertia::render('Dashboard', [
             "reports" => $report->get()
