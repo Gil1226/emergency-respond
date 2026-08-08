@@ -1,6 +1,6 @@
 import CreateHospitalAccount from "./CreateHospitalAccount";
 import ViewHospitalAcc from "./ViewHospitalAcc";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { router } from "@inertiajs/react";
 import Swal from "sweetalert2";
 
@@ -14,6 +14,7 @@ function ViewHospital({ setShowViewHospital, selectedHospital, setSelectedHospit
         contact_number: selectedHospital.contact_number,
         availableAmbulance: parseInt(selectedHospital.availableAmbulance, 10)
     });
+
 
     const accountHospital = () => {
         setShowCreateAcc(true);
@@ -85,6 +86,8 @@ function ViewHospital({ setShowViewHospital, selectedHospital, setSelectedHospit
     const viewAccListFunc = () => {
         setShowViewAcc(true);
     }
+
+    
     return (
         <>
             {showViewAcc &&

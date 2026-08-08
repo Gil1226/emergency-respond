@@ -42,7 +42,8 @@ class ReportController extends Controller
             $reports->where('status', $request->status);
         }
         return Inertia::render('Respond', [
-           'reports' =>  $reports->get()
+           'reports' =>  $reports->get(),
+           'status' => $request->status
         ]);
     }
 
@@ -65,7 +66,6 @@ class ReportController extends Controller
             $report->rescued_at = now();
             $hospital->increment('availableAmbulance');
             $report->save();
-
             
         }
         

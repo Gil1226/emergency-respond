@@ -18,7 +18,9 @@ Route::get('/sign-up', function(){
     return Inertia::render('Signup');
 });*/
 Route::middleware('guest')->group(function(){
-    Route::get('/', fn () => Inertia::render('Login'));
+    Route::get('/', fn () => Inertia::render('LandingPage'));
+    Route::get('/privacy', fn () => Inertia::render('Privacy'));
+    Route::get('/login', fn () => Inertia::render('Login'));
     Route::get('/sign-up', fn () => Inertia::render('Signup'));
     Route::get('/otp', function () {
         return Inertia::render('OtpConfirmation', [
@@ -51,6 +53,7 @@ Route::middleware('auth')->group(function(){
         Route::delete('/hospital/{hospital}', 'deleteHospital');
         Route::get('/hospital/{hospital}', 'viewHospitalAcc');
         Route::delete('/hospital/{user}/Account', 'deleteAccount');
+        
     });
 });
 

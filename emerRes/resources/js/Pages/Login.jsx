@@ -18,6 +18,21 @@ function Login(){
     }
     return(
         <div className="h-screen flex flex-col items-center justify-center bg-gradient-to-b from-secondary to-primary">
+            <div className="absolute top-6 left-6">
+                <a
+                    href="/"
+                    className="flex items-center gap-2 text-white/80 hover:text-white 
+                            transition-all duration-200 group"
+                >
+                    <span className="text-xl group-hover:-translate-x-1 transition-transform">
+                        ←
+                    </span>
+
+                    <span className="text-sm font-medium">
+                        Back to landing page
+                    </span>
+                </a>
+            </div>
             <div className="mb-[100px] mt-[-100px]">
                 <p className="title text-white">Emergency Respond</p>
             </div>

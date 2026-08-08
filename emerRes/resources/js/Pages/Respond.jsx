@@ -1,17 +1,21 @@
 import TopPanel from "../Components/TopPanel";
 import NavigationBtn from "../Components/NavigationBtn";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AddReportAccident from "../Components/AddReportAccident";
 import RespondForm from "@/Components/RespondForm";
 import RescuedForm from "@/Components/RescuedForm";
 import { router } from "@inertiajs/react";
 
-function Respond({reports = []}){
+function Respond({reports = [], status}) {
     const [showReportAccident, setShowReportAccident] = useState(false);
     const [showRespondForm, setShowRespondForm] = useState(false);
     const [showRescuedForm, setShowRescuedForm] = useState(false);
     const [reportClickedVal, setReportClickedVal] = useState();
     const [sort, setSort] = useState();
+
+    useEffect(() => {
+        setSort(status);
+    }, [status]);
 
     const showForm = () => {
         setShowReportAccident(true);
