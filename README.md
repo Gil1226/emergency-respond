@@ -12,7 +12,6 @@ The system aims to reduce emergency response time by providing a centralized pla
 - Report emergency incidents
 - Submit current location
 - Track emergency request status
-- Receive response updates
 
 ### 🚑 Ambulance Personnel
 - View assigned emergency reports
@@ -30,7 +29,6 @@ The system aims to reduce emergency response time by providing a centralized pla
 ### 🗺️ Mapping
 - Interactive map using Leaflet
 - Current user location
-- Hospital locations
 - Emergency report locations
 - Route navigation
 - ETA calculation
