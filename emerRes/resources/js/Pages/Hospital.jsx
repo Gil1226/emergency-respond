@@ -5,6 +5,7 @@ import AddHospital from "../Components/AddHospitalForm";
 import ViewHospital from "@/Components/ViewHospital";
 
 function Hospital({hospitals = []}){
+
     const [showAddHospital, setShowAddHospital] = useState(false);
     const [showViewHospital, setShowViewHospital] = useState(false);
     const [selectedHospital, setSelectedHospital] = useState();

@@ -5,7 +5,7 @@ import { Link, usePage } from "@inertiajs/react";
 function NavigationBtn(){
     const { url } = usePage();
     return(
-        <div className="text-3xl text-white h-16 flex justify-around items-center bg-primary z-50">
+        <div className="text-3xl text-white h-16 flex justify-around items-center bg-primary z-30">
             <Link href="/dashboard" className={url == "/dashboard" ? "text-secondary" : ""}>
                 <FontAwesomeIcon icon={faChartLine} />
             </Link>

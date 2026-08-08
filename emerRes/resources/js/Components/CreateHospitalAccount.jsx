@@ -39,14 +39,14 @@ function CreateHospitalAccount({setShowCreateAcc, selectedHospital}) {
     }
 
     return(
-        <div className="bg-[#f5f6fa] rounded-2xl shadow-xl p-8">
+        <div className="bg-[#f5f6fa] rounded-2xl shadow-xl p-8 -z-50 max-w-96">
             <form
                 onSubmit={createAccFunc}
                 className="flex flex-col h-full"
             >
-                {/* Header */}
-                <div className="mb-8">
-                    <h2 className="text-3xl font-bold text-primary">
+
+                <div className="mb-5">
+                    <h2 className="text-2xl font-bold text-primary">
                         Create Hospital Account
                     </h2>
 
@@ -55,13 +55,12 @@ function CreateHospitalAccount({setShowCreateAcc, selectedHospital}) {
                     </p>
                 </div>
 
-                {/* Account Information */}
-                <div className="bg-white rounded-xl shadow-sm p-6 space-y-5">
+                <div className="bg-white rounded-xl shadow-sm p-3 space-y-4">
                     <h3 className="font-semibold text-lg text-gray-700">
                         Account Information
                     </h3>
 
-                    <div className="relative">
+                    <div className="relative text-xs">
                         <input
                             id="hospitalName"
                             type="text"
@@ -78,7 +77,7 @@ function CreateHospitalAccount({setShowCreateAcc, selectedHospital}) {
                         </label>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-5">
+                    <div className="grid grid-cols-2 gap-2 text-xs">
                         <div className="relative">
                             <input
                                 id="email"
@@ -96,7 +95,7 @@ function CreateHospitalAccount({setShowCreateAcc, selectedHospital}) {
                             </label>
                         </div>
 
-                        <div className="relative">
+                        <div className="relative text-xs">
                             <input
                                 id="contactNumber"
                                 type="text"
@@ -116,7 +115,7 @@ function CreateHospitalAccount({setShowCreateAcc, selectedHospital}) {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-5">
+                    <div className="grid grid-cols-2 gap-5 text-xs">
                         <div className="relative">
                             <input
                                 id="password"
@@ -136,7 +135,7 @@ function CreateHospitalAccount({setShowCreateAcc, selectedHospital}) {
                             </label>
                         </div>
 
-                        <div className="relative">
+                        <div className="relative text-xs">
                             <input
                                 id="confirmPassword"
                                 type="password"
@@ -160,7 +159,7 @@ function CreateHospitalAccount({setShowCreateAcc, selectedHospital}) {
                     </div>
                 </div>
 
-                {/* Role */}
+
                 <div className="bg-white rounded-xl shadow-sm p-6 mt-6">
                     <h3 className="font-semibold text-lg text-gray-700 mb-4">
                         Account Role
@@ -187,7 +186,7 @@ function CreateHospitalAccount({setShowCreateAcc, selectedHospital}) {
                                 className="hidden"
                             />
 
-                            <p className="font-semibold">
+                            <p className="font-semibold text-xs">
                                 🏥 Hospital Admin
                             </p>
                         </label>
@@ -212,14 +211,13 @@ function CreateHospitalAccount({setShowCreateAcc, selectedHospital}) {
                                 className="hidden"
                             />
 
-                            <p className="font-semibold">
+                            <p className="font-semibold text-xs">
                                 🚑 Ambulance Personnel
                             </p>
                         </label>
                     </div>
                 </div>
 
-                {/* Buttons */}
                 <div className="mt-auto pt-8 flex justify-end gap-4">
                     <button
                         type="button"

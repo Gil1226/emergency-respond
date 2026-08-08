@@ -68,4 +68,5 @@ class HospitalController extends Controller
     public function deleteAccount(User $user){
         $user->delete();
     }
+
 }

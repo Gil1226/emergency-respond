@@ -2,7 +2,7 @@ import CalculateDistance from "@/Utility/calculateDistance";
 import CurrentLocation from "@/Utility/CurrentLocation";
 import { usePage, router } from "@inertiajs/react";
 import { useEffect, useState } from "react";
-import RespondForm from "./RespondForm";
+import RespondForm from "../RespondForm";
 import DateIdentifier from "@/Utility/DateIdentifier";
 
 function AmbulanceDashboard({reports, greeting}) {
@@ -137,7 +137,6 @@ function AmbulanceDashboard({reports, greeting}) {
     return(
         <div className="flex-1 px-4 py-8 max-w-3xl mx-auto overflow-scroll scrollbar-hide">
 
-            {/* Greeting */}
             <div className="mb-8">
                 <p className="text-gray-500 text-base">
                     Ambulance Personnel
@@ -148,8 +147,6 @@ function AmbulanceDashboard({reports, greeting}) {
                 </p>
             </div> 
 
-
-            {/* Active Assignment */}
             {reportResponding ? (
                 <div className="border rounded-3xl p-7 mb-8 shadow-md">
 
@@ -213,8 +210,6 @@ function AmbulanceDashboard({reports, greeting}) {
 
             )}
 
-
-            {/* Statistics */}
             <div className="grid grid-cols-2 gap-5 mb-8">
 
                 <div className="bg-white border rounded-3xl p-6 text-center shadow-sm">
@@ -244,8 +239,6 @@ function AmbulanceDashboard({reports, greeting}) {
 
             </div>
 
-
-            {/* Live Map */}
             <div className="mb-8">
 
                 <div className="flex justify-between items-center mb-5">
@@ -283,8 +276,6 @@ function AmbulanceDashboard({reports, greeting}) {
 
             </div>
 
-
-            {/* Emergency Requests */}
             <div className="mb-8">
 
                 <div className="flex justify-between items-center mb-5">
@@ -342,8 +333,6 @@ function AmbulanceDashboard({reports, greeting}) {
 
             </div>
 
-
-            {/* Recent Responses */}
             <div className="mb-8">
 
                 <div className="flex justify-between items-center mb-5">
@@ -363,7 +352,7 @@ function AmbulanceDashboard({reports, greeting}) {
                 {seeAllCompleted && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
                         <div className="max-h-[85vh] overflow-scroll scrollbar-hide rounded-3xl bg-white shadow-2xl animate-in fade-in zoom-in-95 duration-200">
-                            {/* Header */}
+
                             <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4">
                                 <div>
                                     <h2 className="text-xl font-bold text-gray-800">
@@ -382,7 +371,6 @@ function AmbulanceDashboard({reports, greeting}) {
                                 </button>
                             </div>
 
-                            {/* List */}
                             <div className="max-h-[70vh] overflow-y-auto bg-gray-50 p-5">
                                 <div className="space-y-4">
                                     {filteredResponse.map((filtered) => (
@@ -438,7 +426,7 @@ function AmbulanceDashboard({reports, greeting}) {
                         <div className="flex items-center justify-between">
                             <div>
                                 <p className="font-bold text-lg text-gray-800">
-                                    Report: #{latestCompleted.id}
+                                    Report: #{String(latestCompleted.id).padStart(5, "0")}
                                 </p>
 
                                 <p className="text-base text-gray-600 mt-2">
@@ -454,7 +442,9 @@ function AmbulanceDashboard({reports, greeting}) {
                             </div>
                         </div>
                     </div> :
-                    <div>Loding...</div>
+                    <div className="bg-white rounded-3xl p-6 shadow-sm">
+                        <p className="text-center">No Response</p>
+                    </div>
                 }
                 
             </div>

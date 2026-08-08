@@ -1,23 +1,75 @@
-import { usePage } from "@inertiajs/react";
+import { usePage, router } from "@inertiajs/react";
+import { useState, useEffect } from "react";
 
-function HospitalDashboard() {
+function HospitalDashboard({reports, greeting}) {
     const { auth } = usePage().props;
-    const hour = new Date().getHours();
-
-    const greeting = () => {
-        if (hour < 12) {
-            return "Good Morning,"
-        }else if(hour < 18){
-            return "Good Afternoon,"
-        }else{
-            return "Good Evening,"
-        }
+    const [activeCases, setActiveCases] = useState(0);
+    const [completedCases, setCompletedCases] = useState(0);
+    const [recommendedEmergency, setRecommendedEmergency] = useState(null);
+    
+    useEffect(() => {
+        filterActiveCases();
+        filterCompletedCases();
+        recommendEmergency();
+    }, [reports]);
+    console.log("Reports:", reports);
+    const filterActiveCases = () => {
+        const activeCases = reports.filter((report) => 
+            report.status === "pending" || report.status === "ongoing");
+        setActiveCases(activeCases.length);
     }
-    console.log(auth.user.role)
+
+    const filterCompletedCases = () => {
+        const completedCases = reports.filter((report) => 
+            report.status === "rescued" && report.user.hospital_id === auth.user.hospital_id);
+        setCompletedCases(completedCases.length);
+    }
+
+    const navigateToReports = () => {
+        router.get("/respond", {
+            status: "pending"
+        });
+    }
+    
+    const recommendEmergency = () => {
+        const severityRank = {
+            minor: 1,
+            moderate: 2,
+            severe: 3,
+            critical: 4,
+        };
+        const pendingReports = reports.filter(report => report.status === "pending");
+
+        if (pendingReports.length === 0) {
+            setRecommendedEmergency(null);
+            return;
+        }
+        
+        const recommended = pendingReports.reduce((best, current) => {
+            const bestSeverity = severityRank[best.severity];
+            const currentSeverity = severityRank[current.severity];
+            
+            // Higher severity wins
+            if (currentSeverity > bestSeverity) {
+                return current;
+            }
+
+            // Same severity -> choose the oldest
+            if (
+                currentSeverity === bestSeverity &&
+                new Date(current.created_at) < new Date(best.created_at)
+            ) {
+                return current;
+            }
+                    return best;
+                });
+
+                setRecommendedEmergency(recommended);
+            };
+
     return(
         <div className="flex-1 px-4 py-5 max-w-2xl mx-auto overflow-scroll scrollbar-hide">
 
-            {/* Greeting */}
             <div className="mb-5">
 
                 <p className="text-gray-500 text-sm">
@@ -25,39 +77,11 @@ function HospitalDashboard() {
                 </p>
 
                 <p className="text-2xl font-bold text-gray-800">
-                    {greeting()} {auth.user.name} 👋
+                    {greeting} {auth.user.name} 👋
                 </p>
 
             </div>
 
-
-            {/* Hospital Status */}
-            <div className="bg-white border rounded-2xl p-5 mb-5 shadow-sm">
-
-                <div className="flex items-center justify-between">
-
-                    <div>
-
-                        <p className="text-sm text-gray-500">
-                            Hospital Status
-                        </p>
-
-                        <p className="text-lg font-bold text-green-600 mt-1">
-                            🟢 Active
-                        </p>
-
-                    </div>
-
-                    <button className="bg-green-100 text-green-700 font-semibold px-4 py-2 rounded-xl text-sm">
-                        Change
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            {/* Hospital Information */}
             <div className="border rounded-2xl p-5 mb-5 shadow-md">
 
                 <div className="flex items-center justify-between mb-4">
@@ -66,15 +90,11 @@ function HospitalDashboard() {
                         🏥 Hospital Information
                     </p>
 
-                    <button className="text-primary text-sm font-semibold">
-                        Edit
-                    </button>
-
                 </div>
 
 
-                <p className="text-xl font-bold">
-                    {auth.user.hospital?.hospitalName || "Hospital Name"}
+                <p className="text-xl font-bold capitalize">
+                    {auth.user.name || "Hospital Name"}
                 </p>
 
                 <p className="text-sm text-gray-500 mt-2">
@@ -87,14 +107,12 @@ function HospitalDashboard() {
 
             </div>
 
-
-            {/* Statistics */}
             <div className="grid grid-cols-3 gap-3 mb-5">
 
                 <div className="bg-white rounded-2xl p-4 text-center shadow-sm">
 
                     <p className="text-2xl font-bold text-[#4d1414]">
-                        5
+                        {activeCases}
                     </p>
 
                     <p className="text-xs text-gray-500 mt-1">
@@ -107,7 +125,7 @@ function HospitalDashboard() {
                 <div className="bg-white rounded-2xl p-4 text-center shadow-sm">
 
                     <p className="text-2xl font-bold text-green-600">
-                        8
+                        {auth.user.hospital?.availableAmbulance || 0}
                     </p>
 
                     <p className="text-xs text-gray-500 mt-1">
@@ -120,7 +138,7 @@ function HospitalDashboard() {
                 <div className="bg-white rounded-2xl p-4 text-center shadow-sm">
 
                     <p className="text-2xl font-bold text-blue-600">
-                        12
+                        {completedCases}
                     </p>
 
                     <p className="text-xs text-gray-500 mt-1">
@@ -131,17 +149,17 @@ function HospitalDashboard() {
 
             </div>
 
-
-            {/* Incoming Emergencies */}
             <div className="mb-5">
 
                 <div className="flex justify-between items-center mb-3">
 
                     <p className="font-bold text-gray-800">
-                        🚨 Incoming Emergencies
+                        🚨 Recommended Emergency
                     </p>
 
-                    <button className="text-primary text-sm font-semibold">
+                    <button className="text-primary text-sm font-semibold"
+                            onClick={navigateToReports}
+                    >
                         See All
                     </button>
 
@@ -156,19 +174,15 @@ function HospitalDashboard() {
                         <div>
 
                             <p className="font-bold text-gray-800">
-                                #00123
-                            </p>
-
-                            <p className="text-sm text-gray-600 mt-1">
-                                Vehicular Accident
+                                {recommendedEmergency ? `#${recommendedEmergency.id}` : "No Emergency"} {recommendedEmergency ? recommendedEmergency.severity : "No Type"}
                             </p>
 
                             <p className="text-sm text-gray-500 mt-1">
-                                📍 Capas, Tarlac
+                                📍 {recommendedEmergency ? recommendedEmergency.location : "No Location"} <br></br> Estimated Time to Reach: {recommendedEmergency ? recommendedEmergency.eta / 2 + " mins" : "No Time"}
                             </p>
 
                             <p className="text-xs text-primary mt-2">
-                                🚑 AMB-001 · ETA: 8 min
+                                Reported by {recommendedEmergency ? recommendedEmergency.user.name : "No User"}
                             </p>
 
                         </div>

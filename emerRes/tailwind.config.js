@@ -14,11 +14,24 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                body: ['Inter', 'sans-serif'],
+            },
+            boxShadow: {
+                phone: '0 40px 70px -20px rgba(60,15,10,0.55)',
+                dash: '0 30px 60px -30px rgba(60,20,15,0.25)',
             },
             colors: {
-                primary: "#D74240",
-                secondary: "#FE8280",
-                third: "#8FD339",
+                primary: '#DC5049',
+                secondary: '#A82E26',
+                coral1: '#F58C81',
+                ink: '#241C1B',
+                muted: '#7B6E6C',
+                bgsoft: '#FFF3F1',
+                line: '#F0E2DF',
+                pending: '#F0645A',
+                ongoing: '#F0A83C',
+                rescued: '#1F9D55',
+                available: '#22B573',
             },
         },
     },

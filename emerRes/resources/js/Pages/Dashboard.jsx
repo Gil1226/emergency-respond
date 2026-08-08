@@ -3,9 +3,9 @@ import NavigationBtn from "../Components/NavigationBtn";
 import TopPanel from "../Components/TopPanel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTriangleExclamation, faKitMedical, faTruckMedical } from "@fortawesome/free-solid-svg-icons";
-import AmbulanceDashboard from "@/Components/AmbulanceDashboard";
-import HospitalDashboard from "@/Components/HospitalDashboard";
-import UserDashboard from "@/Components/UserDashboard";
+import AmbulanceDashboard from "@/Components/dashboards/AmbulanceDashboard";
+import HospitalDashboard from "@/Components/dashboards/HospitalDashboard";
+import UserDashboard from "@/Components/dashboards/UserDashboard";
 
 function Dashboard({reports}) {
     const hour = new Date().getHours();
@@ -23,8 +23,9 @@ function Dashboard({reports}) {
         <div className="md:bg-slate-950">
             <div className="flex-col-between m-auto md:w-[27rem] md:bg-white">
                 <TopPanel/>
-                <AmbulanceDashboard reports={reports} greeting={greeting()}/>    
-
+                {/*<AmbulanceDashboard reports={reports} greeting={greeting()}/>*/}
+                <HospitalDashboard reports={reports} greeting={greeting()} />
+                {/*<UserDashboard reports={reports} greeting={greeting()}/> */}
                 <NavigationBtn/>
                 
             </div>
