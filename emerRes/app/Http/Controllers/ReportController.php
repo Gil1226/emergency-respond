@@ -43,7 +43,8 @@ class ReportController extends Controller
         }
         return Inertia::render('Respond', [
            'reports' =>  $reports->get(),
-           'status' => $request->status
+           'status' => $request->status,
+           'reportId' => $request->reportId
         ]);
     }
 

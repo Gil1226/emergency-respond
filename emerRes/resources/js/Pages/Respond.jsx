@@ -6,7 +6,7 @@ import RespondForm from "@/Components/RespondForm";
 import RescuedForm from "@/Components/RescuedForm";
 import { router } from "@inertiajs/react";
 
-function Respond({reports = [], status}) {
+function Respond({reports = [], status, reportId}) {
     const [showReportAccident, setShowReportAccident] = useState(false);
     const [showRespondForm, setShowRespondForm] = useState(false);
     const [showRescuedForm, setShowRescuedForm] = useState(false);
@@ -16,6 +16,10 @@ function Respond({reports = [], status}) {
     useEffect(() => {
         setSort(status);
     }, [status]);
+
+    useEffect(() => {
+        viewRecommendedReport();
+    }, [reportId]);
 
     const showForm = () => {
         setShowReportAccident(true);
@@ -49,6 +53,14 @@ function Respond({reports = [], status}) {
             preserveState: true,
             preserveScroll: true,
         });
+    }
+
+    const viewRecommendedReport = () => {
+        if (!reportId) {
+            return;
+        }
+        setReportClickedVal(reports.find(report => report.id == reportId));
+        setShowRespondForm(true);
     }
 
     return(

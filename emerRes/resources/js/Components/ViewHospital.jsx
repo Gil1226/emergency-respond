@@ -12,9 +12,25 @@ function ViewHospital({ setShowViewHospital, selectedHospital, setSelectedHospit
         hospitalName: selectedHospital.hospitalName,
         hospitalAddress: selectedHospital.hospitalAddress,
         contact_number: selectedHospital.contact_number,
+        numberOfAmbulance: parseInt(selectedHospital.numberOfAmbulance, 10),
         availableAmbulance: parseInt(selectedHospital.availableAmbulance, 10)
     });
 
+    useEffect(() => {
+        if (!selectedHospital) return;
+
+            const originalNumber = Number(selectedHospital.numberOfAmbulance);
+            const originalAvailable = Number(selectedHospital.availableAmbulance);
+            const currentNumber = Number(hospitalEditInfo.numberOfAmbulance);
+
+            const difference = currentNumber - originalNumber;
+
+            setHospitalEditInfo(prev => ({
+                ...prev,
+                availableAmbulance: originalAvailable + difference,
+            })
+        );
+    }, [hospitalEditInfo.numberOfAmbulance, selectedHospital]);
 
     const accountHospital = () => {
         setShowCreateAcc(true);
@@ -28,7 +44,7 @@ function ViewHospital({ setShowViewHospital, selectedHospital, setSelectedHospit
         setIsEdit(false);
     }
     const confirmEditFunc = () => {
-        router.put(`/hospital/${selectedHospital.id}`, hospitalEditInfo, {
+        router.put(`/hospital/${selectedHospital.id}`, hospitalEditInfo,  {
             onSuccess: () => {
                 Swal.fire({
                     title: 'Success',
@@ -36,8 +52,9 @@ function ViewHospital({ setShowViewHospital, selectedHospital, setSelectedHospit
                     icon: 'success',
                     confirmButtonText: 'ok'
                 })
+
                 setSelectedHospital(prev => ({
-                    ...prev, ...hospitalEditInfo
+                    ...prev, ...hospitalEditInfo, 
                 }))
                 setIsEdit(false);
             },
@@ -45,7 +62,7 @@ function ViewHospital({ setShowViewHospital, selectedHospital, setSelectedHospit
                 console.log("Error", errors);
                 Swal.fire({
                     title: 'error',
-                    text: Object.values(errors)[0] || error,
+                    text: Object.values(errors)[0] || errors,
                     icon: 'error',
                     confirmButtonText: 'ok'
                 })
@@ -195,21 +212,21 @@ function ViewHospital({ setShowViewHospital, selectedHospital, setSelectedHospit
                 {/* Ambulance */}
                 <div className="py-10 border-b text-center">
                     <p className="text-gray-500 uppercase tracking-wide">
-                        Available Ambulances
+                        Number of Ambulances
                     </p>
                     {isEdit ? 
                         <input type="number" 
-                            value={hospitalEditInfo.availableAmbulance}
+                            value={hospitalEditInfo.numberOfAmbulance}
                             onChange={(e) => 
                                 setHospitalEditInfo({
                                     ...hospitalEditInfo, 
-                                    availableAmbulance: e.target.value,
-                            })}
+                                    numberOfAmbulance: e.target.value,
+                                })}
                             className="inputDesign text-7xl text-center"
                         /> 
                         :
                         <h1 className="text-7xl font-bold text-green-600 mt-3">
-                            {selectedHospital.availableAmbulance}
+                            {selectedHospital.numberOfAmbulance}
                         </h1>
                     }
                 </div>
@@ -223,7 +240,7 @@ function ViewHospital({ setShowViewHospital, selectedHospital, setSelectedHospit
                         </button>
 
                         <button
-                            className="px-8 py-3 rounded-lg bg-third text-white hover:opacity-90 font-semibold"
+                            className="px-8 py-3 rounded-lg bg-primary text-white hover:opacity-90 font-semibold"
                             onClick={confirmEditFunc}
                         >
                             Make Changes

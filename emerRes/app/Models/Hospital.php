@@ -10,6 +10,7 @@ class Hospital extends Model
         "hospitalName",
         "hospitalAddress", 
         "availableAmbulance",
+        "numberOfAmbulance",
         "contact_number"
     ];
 
