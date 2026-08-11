@@ -24,8 +24,8 @@ function Dashboard({reports}) {
             <div className="flex-col-between m-auto md:w-[27rem] md:bg-white">
                 <TopPanel/>
                 {/*<AmbulanceDashboard reports={reports} greeting={greeting()}/>*/}
-                <HospitalDashboard reports={reports} greeting={greeting()} />
-                {/*<UserDashboard reports={reports} greeting={greeting()}/> */}
+                {/*<HospitalDashboard reports={reports} greeting={greeting()} />*/}
+                <UserDashboard reports={reports} greeting={greeting()}/> 
                 <NavigationBtn/>
                 
             </div>
