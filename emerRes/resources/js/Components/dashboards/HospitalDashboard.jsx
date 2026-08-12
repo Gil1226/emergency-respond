@@ -1,5 +1,6 @@
 import { usePage, router } from "@inertiajs/react";
 import { useState, useEffect } from "react";
+import RecentResponse from "@/Utility/RecentResponse";
 
 function HospitalDashboard({reports, greeting}) {
     const { auth } = usePage().props;
@@ -65,7 +66,14 @@ function HospitalDashboard({reports, greeting}) {
                 });
 
                 setRecommendedEmergency(recommended);
-            };
+        };
+
+        const viewFunc = (reportId) => {
+            router.get("/respond", {
+                reportId: reportId
+            });
+            console.log("Navigating to report with ID:", reportId);
+        }
 
     return(
         <div className="flex-1 px-4 py-5 max-w-2xl mx-auto overflow-scroll scrollbar-hide">
@@ -168,32 +176,38 @@ function HospitalDashboard({reports, greeting}) {
 
                 {/* Emergency Card */}
                 <div className="bg-white rounded-2xl p-4 shadow-sm">
-
+                
+                {recommendedEmergency ?
                     <div className="flex items-center justify-between">
-
+                        
                         <div>
-
                             <p className="font-bold text-gray-800">
-                                {recommendedEmergency ? `#${recommendedEmergency.id}` : "No Emergency"} {recommendedEmergency ? recommendedEmergency.severity : "No Type"}
+                                {recommendedEmergency.id} {recommendedEmergency.severity}
                             </p>
 
                             <p className="text-sm text-gray-500 mt-1">
-                                📍 {recommendedEmergency ? recommendedEmergency.location : "No Location"} <br></br> Estimated Time to Reach: {recommendedEmergency ? recommendedEmergency.eta / 2 + " mins" : "No Time"}
+                                📍 {recommendedEmergency.location}
                             </p>
 
                             <p className="text-xs text-primary mt-2">
-                                Reported by {recommendedEmergency ? recommendedEmergency.user.name : "No User"}
+                                Reported by {recommendedEmergency.user.name}
                             </p>
 
                         </div>
 
 
-                        <button className="bg-primary text-white px-4 py-2 rounded-xl text-sm font-semibold">
+                        <button className="bg-primary text-white px-4 py-2 rounded-xl text-sm font-semibold"
+                                onClick={() => viewFunc(recommendedEmergency.id)}
+                        >
                             View
-                        </button>
-
+                        </button>   
+                    </div>:
+                    <div className="flex items-center justify-between">
+                        <p className="text-gray-500 text-sm">
+                            No pending emergency at the moment.
+                        </p>
                     </div>
-
+                    }
                 </div>
 
             </div>
@@ -207,10 +221,6 @@ function HospitalDashboard({reports, greeting}) {
                     <p className="font-bold text-gray-800">
                         🚑 Ambulance Status
                     </p>
-
-                    <button className="text-primary text-sm font-semibold">
-                        See All
-                    </button>
 
                 </div>
 
@@ -231,7 +241,7 @@ function HospitalDashboard({reports, greeting}) {
                         </div>
 
                         <p className="font-bold text-green-600">
-                            3
+                            {auth.user.hospital?.availableAmbulance || 0}
                         </p>
 
                     </div>
@@ -251,7 +261,7 @@ function HospitalDashboard({reports, greeting}) {
                         </div>
 
                         <p className="font-bold text-yellow-600">
-                            2
+                            {auth.user.hospital?.numberOfAmbulance - auth.user.hospital?.availableAmbulance || 0}
                         </p>
 
                     </div>
@@ -262,95 +272,22 @@ function HospitalDashboard({reports, greeting}) {
 
                         <div className="flex items-center gap-3">
 
-                            <span className="w-3 h-3 bg-red-500 rounded-full"></span>
+                            <span className="w-3 h-3 bg-stone-600 rounded-full"></span>
 
                             <p className="text-sm font-medium">
-                                Unavailable
+                                Total Ambulances
                             </p>
 
                         </div>
 
-                        <p className="font-bold text-red-600">
-                            1
+                        <p className="font-bold text-stone-600">
+                            {auth.user.hospital?.numberOfAmbulance || 0}
                         </p>
-
                     </div>
-
                 </div>
-
             </div>
 
-
-            {/* Recent Emergencies */}
-            <div className="mb-5">
-
-                <div className="flex justify-between items-center mb-3">
-
-                    <p className="font-bold text-gray-800">
-                        📋 Recent Emergencies
-                    </p>
-
-                    <button className="text-primary text-sm font-semibold">
-                        See All
-                    </button>
-
-                </div>
-
-
-                {/* Recent Emergency */}
-                <div className="bg-white rounded-2xl p-4 shadow-sm">
-
-                    <div className="flex items-center justify-between">
-
-                        <div>
-
-                            <p className="font-bold text-gray-800">
-                                #00122
-                            </p>
-
-                            <p className="text-sm text-gray-600">
-                                Medical Emergency
-                            </p>
-
-                            <p className="text-xs text-green-600 mt-1">
-                                🟢 Completed
-                            </p>
-
-                        </div>
-
-
-                        <p className="text-xs text-gray-400">
-                            Today
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            {/* Quick Actions */}
-            <div className="mb-5">
-
-                <p className="font-bold text-gray-800 mb-3">
-                    ⚡ Quick Actions
-                </p>
-
-
-                <div className="grid grid-cols-2 gap-3">
-
-                    <button className="bg-primary text-white rounded-2xl p-4 font-semibold">
-                        🏥 Edit Hospital
-                    </button>
-
-                    <button className="bg-white border rounded-2xl p-4 font-semibold text-gray-700">
-                        🚑 Manage Ambulances
-                    </button>
-
-                </div>
-
-            </div>
+            <RecentResponse reports={reports} />
 
         </div>
     )

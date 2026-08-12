@@ -17,7 +17,7 @@ class HospitalController extends Controller
             "availableAmbulance"=> "required",
             "contact_number" => "required"
         ]);
-
+        $data['numberOfAmbulance'] = $request->availableAmbulance;
         Hospital::create($data);
         
     }
@@ -52,9 +52,11 @@ class HospitalController extends Controller
         $hospital->update([
             "hospitalName" => $request->hospitalName,
             "hospitalAddress" => $request->hospitalAddress, 
+            "numberOfAmbulance"=> $request->numberOfAmbulance,
             "availableAmbulance"=> $request->availableAmbulance,
             "contact_number" => $request->contact_number,
         ]);
+
     }
     public function deleteHospital(Hospital $hospital){
         $hospital->delete();

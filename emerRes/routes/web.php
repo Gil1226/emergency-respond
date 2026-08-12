@@ -17,6 +17,15 @@ use Inertia\Inertia;
 Route::get('/sign-up', function(){
     return Inertia::render('Signup');
 });*/
+
+Route::controller(UserController::class)->group(function(){
+    Route::post('/sign-up', "signUp");
+    Route::post('/login', "Login");
+    Route::post('/logout',"Logout"); 
+    Route::post('/otp', "Otp");
+    Route::post('/verify', "verify");
+});
+
 Route::middleware('guest')->group(function(){
     Route::get('/', fn () => Inertia::render('LandingPage'));
     Route::get('/privacy', fn () => Inertia::render('Privacy'));
@@ -57,11 +66,4 @@ Route::middleware('auth')->group(function(){
     });
 });
 
-Route::controller(UserController::class)->group(function(){
-    Route::post('/sign-up', "signUp");
-    Route::post('/login', "Login");
-    Route::post('/logout',"Logout"); 
-    Route::post('/otp', "Otp");
-    Route::post('/verify', "verify");
-});
 

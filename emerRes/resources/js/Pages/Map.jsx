@@ -117,7 +117,6 @@ function Map({ reports = [], reportId }) {
                                     </div>
 
                                     <div>
-
                                         <p className="text-[10px] uppercase tracking-wider font-bold text-gray-400">
                                             Emergency Reports
                                         </p>

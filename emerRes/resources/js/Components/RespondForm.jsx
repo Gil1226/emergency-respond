@@ -7,7 +7,6 @@ function RespondForm({setShowRespondForm, reportClickedVal, reports = []}) {
     const close = () => {
         setShowRespondForm(false)
     }
-    console.log(reports)
     const respond = () => {
 
         if (reports.some(report => report.respond_by == auth.user.name && report.status === "ongoing")){
