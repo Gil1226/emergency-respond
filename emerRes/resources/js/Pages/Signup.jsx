@@ -16,17 +16,17 @@ function Signup(){
     
     return(
         <div className="h-screen flex flex-col items-center justify-center bg-gradient-to-b from-secondary to-primary">
-            <div className="absolute top-6 left-6">
+            <div className="absolute top-4 left-4 sm:top-6 sm:left-6">
                 <a
                     href="/"
-                    className="flex items-center gap-2 text-white/80 hover:text-white 
+                    className="flex items-center gap-2 text-white/80 hover:text-white
                             transition-all duration-200 group"
                 >
                     <span className="text-xl group-hover:-translate-x-1 transition-transform">
                         ←
                     </span>
 
-                    <span className="text-sm font-medium">
+                    <span className="text-sm font-medium hidden sm:inline">
                         Back to landing page
                     </span>
                 </a>

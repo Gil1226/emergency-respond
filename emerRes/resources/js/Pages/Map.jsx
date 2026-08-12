@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import CurrentLocation from "@/Utility/CurrentLocation";
 import RouteDirection from "@/Utility/routeDirection";
 import { router } from "@inertiajs/react";
+import MarkerDesign from "@/Utility/MarkerDesign";
 
 function Map({ reports = [], reportId }) {
     const [lat, setLat] = useState();
@@ -401,22 +402,11 @@ function Map({ reports = [], reportId }) {
                                             report.long
                                         ]}
                                         key={report.id}
+                                        icon={MarkerDesign(report.severity)}
                                         eventHandlers={{
                                             click: () => showRoute(report)
                                         }}
                                     >
-
-                                        <Tooltip
-                                            permanent
-                                            direction="top"
-                                        >
-
-                                            <span className="font-bold">
-                                                {report.severity}
-                                            </span>
-
-                                        </Tooltip>
-
 
                                         <Popup>
 
@@ -466,6 +456,7 @@ function Map({ reports = [], reportId }) {
                                     selectedReport.long
                                 ]}
                                 onRouteFound={setEta}
+                                
                             />
 
                         )}

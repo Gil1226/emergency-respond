@@ -38,8 +38,8 @@ function Login(){
                 <p className="title text-white text-2xl sm:text-3xl text-center">Emergency Respond</p>
             </div>
 
-            <div className="w-full max-w-sm">
-                <div className="h-auto w-full p-6 sm:p-10 flex flex-col items-center justify-around card">
+            <div className="max-w-sm">
+                <div className="h-96 w-72 p-10 flex flex-col items-center justify-around card">
                     <p className="title">Login</p>
                     <form onSubmit={login} className="w-full">
                         <div className="flex flex-col">
