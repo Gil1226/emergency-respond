@@ -15,11 +15,29 @@
     *{
         box-sizing: border-box;
     }
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply text-ink font-body leading-relaxed antialiased bg-white;
+    }
 }
 
 @layer components{
-    .title{
+    .section-container {
+        @apply max-w-[1180px] mx-auto px-8 py-24;
+    }
+ 
+    .section-wrap {
+        @apply py-24;
+    }
+
+    .title {
         @apply text-3xl font-extrabold;
+    }
+    .section-title {
+        @apply title tracking-tight mt-3 !text-[28px] sm:!text-[34px] lg:!text-[40px];
     }
     .card{
         @apply rounded-2xl shadow-lg bg-white;
@@ -60,8 +78,167 @@
     .dropdown{
         @apply text-xs border border-solid border-primary p-2 rounded-full;
     }
+
+    .eyebrow {
+        @apply inline-flex items-center gap-2
+               font-semibold text-[13px]
+               tracking-[.06em] uppercase text-primary
+               before:content-[''] before:w-2 before:h-2
+               before:rounded-full before:bg-primary;
+    }
+ 
+    .section-description {
+        @apply text-muted text-base mt-3.5;
+    }
+ 
+    .section-heading {
+        @apply max-w-[600px] mb-12;
+    }
+    .card {
+        @apply rounded-2xl shadow-lg bg-white;
+    }
+ 
+    .card-flat {
+        @apply card border border-line !shadow-none;
+    }
+ 
+    .phone-shell {
+        @apply w-[270px] bg-[#0E0E10] rounded-[38px] p-2.5 shadow-phone;
+    }
+ 
+    .phone-screen {
+        @apply card !rounded-[28px] overflow-hidden h-[560px] flex flex-col !shadow-none;
+    }
+ 
+    .phone-header {
+        @apply flex items-center justify-between px-[18px] pt-4 pb-2.5 border-b border-line;
+    }
+     .btn {
+        @apply inline-flex items-center justify-center gap-2
+                font-semibold text-sm
+               transition-all duration-200 active:translate-y-0;
+    }
+ 
+    .btn-primary {
+        @apply btn bg-primary text-white rounded-[10px] px-5 py-3
+               hover:-translate-y-0.5 hover:shadow-lg;
+    }
+ 
+    .btn-secondary {
+        @apply btn bg-white text-ink border border-line rounded-[10px] px-5 py-3
+               hover:-translate-y-0.5 hover:shadow-md;
+    }
+ 
+    .btn-ghost {
+        @apply text-xs border border-solid border-primary p-2 rounded-full
+               hover:bg-secondary transition-colors duration-200;
+    }
+ 
+    .btn-solid-white {
+        @apply inline-flex items-center gap-2 rounded-lg bg-white px-6 py-3.5
+               text-[15px] font-semibold text-secondary hover:bg-[#FFEDEB] transition;
+    }
+ 
+    .btn-outline-white {
+        @apply inline-flex items-center gap-2 rounded-lg border-[1.5px] border-white/60
+               px-6 py-3.5 text-[15px] font-semibold text-white hover:bg-white/10 transition;
+    }
+ 
+    .button-style {
+        @apply rounded-lg bg-primary hover:bg-secondary text-white transition-colors duration-200;
+    }
+ 
+    .button-style-2 {
+        @apply text-xs border border-solid border-primary p-2 rounded-full
+               hover:bg-secondary transition-colors duration-200;
+    }
+
+    .badge {
+        @apply inline-block font-bold text-[11px]
+               tracking-[.03em] uppercase px-3 py-1.5 rounded-full text-white;
+    }
+ 
+    .badge-pending { @apply badge bg-pending; }
+    .badge-ongoing { @apply badge bg-ongoing; }
+    .badge-rescued { @apply badge bg-rescued; }
+ 
+    /* ---- stat tiles (the "2 / Active Cases" boxes) ---- */
+    .stat-tile {
+        @apply text-center bg-white border border-line rounded-xl py-2.5 px-1;
+    }
+ 
+    .stat-value {
+        @apply text-[18px] block;
+    }
+ 
+    .stat-label {
+        @apply text-[9.5px] text-muted;
+    }
+ 
+    /* ---- status rows (the "● Available ... 3" lines) ---- */
+    .status-row {
+        @apply flex justify-between items-center py-2 border-b border-line text-[12.5px];
+    }
+ 
+    .status-dot {
+        @apply w-2 h-2 rounded-full inline-block mr-2;
+    }
+ 
+    /* ---- step / feature numbered tiles ---- */
+    .step-number {
+        @apply w-9 h-9 rounded-[10px] bg-bgsoft text-primary
+               font-bold text-[15px] flex items-center justify-center mb-5;
+    }
+ 
+    .feature-icon {
+        @apply w-[42px] h-[42px] rounded-xl bg-bgsoft flex items-center justify-center mb-4 text-xl;
+    }
+ 
+    /* ---- form ---- */
+    .input-text {
+        @apply border-0 border-b border-black focus:ring-0;
+    }
+ 
+    .inputDesign {
+        @apply w-full border-0 border-b border-solid border-primary
+               bg-transparent focus:outline-none focus:ring-0;
+    }
+ 
+    .labelPosition {
+        @apply absolute left-2 top-4 text-[#525252]
+               transition-all duration-200
+               peer-focus:-translate-y-7
+               peer-focus:text-xs
+               peer-focus:text-primary
+               peer-placeholder-shown:translate-y-0
+               peer-[:not(:placeholder-shown)]:-translate-y-7
+               peer-[:not(:placeholder-shown)]:text-xs;
+    }
+ 
+    .link {
+        @apply underline hover:text-blue-600;
+    }
+ 
+    /* ---- misc ---- */
+    .flex-col-between {
+        @apply h-screen flex flex-col justify-between;
+    }
+ 
+    .cardInfo {
+        @apply mt-2 h-32 border-solid border-b border-t bg-bgsoft flex justify-between p-2;
+    }
+ 
+    .dropdown {
+        @apply text-xs border border-solid border-primary p-2 rounded-full;
+    }
 }
 
 @layer utilities{
-    
+    .cta-gradient {
+        @apply bg-gradient-to-b from-coral1 to-secondary;
+    }
+ 
+    .cta-gradient-br {
+        @apply bg-gradient-to-br from-coral1 to-secondary;
+    }
 } 
