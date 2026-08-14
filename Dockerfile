@@ -5,7 +5,9 @@ FROM node:20-alpine AS assets
 WORKDIR /app
 
 COPY emerRes/package.json emerRes/package-lock.json ./
-RUN npm ci
+# --include=dev guarantees vite/react/tailwind install even if NODE_ENV=production
+# is set in the build environment (they're listed under devDependencies).
+RUN npm ci --include=dev
 
 COPY emerRes/ ./
 RUN npm run build
@@ -66,6 +68,11 @@ COPY docker/nginx.conf /etc/nginx/nginx.conf
 COPY docker/supervisord.conf /etc/supervisord.conf
 COPY docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+
+# MySQL CA certificate (e.g. from Aiven) for SSL connections.
+# Place your downloaded cert at docker/certs/aiven-ca.pem before building.
+# Set MYSQL_ATTR_SSL_CA=/etc/ssl/certs/aiven-ca.pem in Render's env vars to use it.
+COPY docker/certs/aiven-ca.pem /etc/ssl/certs/aiven-ca.pem
 
 EXPOSE 8080
 
