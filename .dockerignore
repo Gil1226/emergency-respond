@@ -1,0 +1,6 @@
+emerRes/.env
+emerRes/node_modules
+emerRes/vendor
+emerRes/storage/logs/*.log
+emerRes/.git
+emerRes/tests

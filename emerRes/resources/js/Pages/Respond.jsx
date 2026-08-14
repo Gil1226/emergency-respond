@@ -112,7 +112,7 @@ function Respond({reports = [], status, reportId}) {
                                             report.status === "pending"
                                                 ? "shadow-secondary"
                                                 : report.status === "ongoing"
-                                                ? "shadow-blue-400"
+                                                ? "shadow-ongoing"
                                                 : "shadow-green-600"
                                         }`}
                                 >
@@ -137,7 +137,7 @@ function Respond({reports = [], status, reportId}) {
                                                     ? "bg-secondary text-white"
 
                                                     : report.status === "ongoing"
-                                                    ? "bg-blue-400 text-white"
+                                                    ? "bg-ongoing text-white"
 
                                                     : "bg-green-700 text-white"
                                             }`}
@@ -191,7 +191,7 @@ function Respond({reports = [], status, reportId}) {
                                                         report.status === "pending"
                                                             ? "text-secondary"
                                                             : report.status === "ongoing"
-                                                            ? "text-blue-400"
+                                                            ? "text-ongoing"
                                                             : "text-green-600"
                                                     }`}
                                             >
@@ -228,7 +228,7 @@ function Respond({reports = [], status, reportId}) {
                                                     e.stopPropagation();
                                                     rescued(report.id);
                                                 }}
-                                                className="px-5 py-2 rounded-lg bg-blue-400 text-white hover:opacity-90 transition"
+                                                className="px-5 py-2 rounded-lg bg-ongoing text-white hover:opacity-90 transition"
                                             >
                                                 View Response
                                             </button>
