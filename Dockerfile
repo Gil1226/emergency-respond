@@ -19,7 +19,7 @@ RUN npx vite build
 # =========================================================
 # Stage 2: PHP application
 # =========================================================
-FROM php:8.3-fpm-alpine AS app
+FROM php:8.4-fpm-alpine AS app
 
 # System packages: nginx + supervisor to run web server, php-fpm,
 # and the queue worker together in one container.
