@@ -1,7 +1,7 @@
 # =========================================================
 # Stage 1: Build frontend assets (React + Inertia + Tailwind)
 # =========================================================
-FROM node:20-alpine AS assets
+FROM node:22-alpine AS assets
 WORKDIR /app
 
 COPY emerRes/package.json emerRes/package-lock.json ./
