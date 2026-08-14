@@ -3,7 +3,7 @@ import NavigationBtn from "../Components/NavigationBtn";
 import { MapContainer, TileLayer, Marker, Popup, Tooltip } from "react-leaflet";
 import { useEffect, useState } from "react";
 import CurrentLocation from "@/Utility/CurrentLocation";
-import RouteDirection from "@/Utility/routeDirection";
+import RouteDirection from "@/Utility/RouteDirection";
 import { router } from "@inertiajs/react";
 import MarkerDesign from "@/Utility/MarkerDesign";
 

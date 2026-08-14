@@ -1,4 +1,4 @@
-import CalculateDistance from "@/Utility/calculateDistance";
+import CalculateDistance from "@/Utility/CalculateDistance";
 import CurrentLocation from "@/Utility/CurrentLocation";
 import { usePage, router } from "@inertiajs/react";
 import { useEffect, useState } from "react";
