@@ -10,7 +10,11 @@ COPY emerRes/package.json emerRes/package-lock.json ./
 RUN npm ci --include=dev
 
 COPY emerRes/ ./
-RUN npm run build
+# Run vite build directly (not `npm run build`) to skip the SSR bundle —
+# ssr.jsx imports from ../../vendor/tightenco/ziggy, a Composer directory
+# that doesn't exist in this Node-only stage, and SSR isn't enabled/used
+# anywhere in this app anyway.
+RUN npx vite build
 
 # =========================================================
 # Stage 2: PHP application
