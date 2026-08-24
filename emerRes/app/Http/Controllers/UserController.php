@@ -127,44 +127,24 @@ class UserController extends Controller
 
         $user = User::where('email', $data['email'])->first();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Check if user exists
-        |--------------------------------------------------------------------------
-        */
         if (!$user) {
             return redirect('/otp')->withErrors([
                 'general' => 'User not found'
             ])->withInput();
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Check if OTP has expired
-        |--------------------------------------------------------------------------
-        */
         if (!$user->otpExpiration || Carbon::now()->gt($user->otpExpiration)) {
             return redirect('/otp')->withErrors([
                 'general' => 'Code Expired'
             ])->withInput();
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Check OTP
-        |--------------------------------------------------------------------------
-        */
         if ((string) $user->otp !== (string) trim($data['guess'])) {
             return redirect('/otp')->withErrors([
                 'general' => 'Incorrect OTP'
             ])->withInput();
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Verify account
-        |--------------------------------------------------------------------------
-        */
         $user->update([
             'is_verified' => true,
             'otp' => null,
@@ -174,12 +154,6 @@ class UserController extends Controller
         return redirect('/');
     }
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | Login
-    |--------------------------------------------------------------------------
-    */
     public function Login(Request $request)
     {
         $data = $request->validate(
@@ -193,11 +167,6 @@ class UserController extends Controller
             ]
         );
 
-        /*
-        |--------------------------------------------------------------------------
-        | Attempt login once
-        |--------------------------------------------------------------------------
-        */
         if (!auth()->attempt($data)) {
             return back()->withErrors([
                 'general' => 'Incorrect Password'
@@ -206,11 +175,6 @@ class UserController extends Controller
 
         $user = auth()->user();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Check account verification
-        |--------------------------------------------------------------------------
-        */
         if (!$user->is_verified) {
 
             auth()->logout();
@@ -240,11 +204,6 @@ class UserController extends Controller
     }
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | Resend OTP
-    |--------------------------------------------------------------------------
-    */
     public function verify(Request $request)
     {
         $data = $request->validate([
@@ -255,40 +214,20 @@ class UserController extends Controller
 
         $emailChecker = User::where('email', $email)->first();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Check if email exists
-        |--------------------------------------------------------------------------
-        */
         if (!$emailChecker) {
             return back()->withErrors([
                 'email' => 'Email not found.'
             ]);
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Check if already verified
-        |--------------------------------------------------------------------------
-        */
         if ($emailChecker->is_verified) {
             return back()->withErrors([
                 'email' => 'Account is already verified.'
             ]);
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Generate new OTP
-        |--------------------------------------------------------------------------
-        */
         $otp = rand(100000, 999999);
 
-        /*
-        |--------------------------------------------------------------------------
-        | Send OTP using Resend
-        |--------------------------------------------------------------------------
-        */
         Resend::emails()->send([
             'from' => 'onboarding@resend.dev',
             'to' => [$emailChecker->email],
@@ -301,11 +240,6 @@ class UserController extends Controller
             ",
         ]);
 
-        /*
-        |--------------------------------------------------------------------------
-        | Save OTP
-        |--------------------------------------------------------------------------
-        */
         $emailChecker->update([
             'otp' => $otp,
             'otpExpiration' => Carbon::now()->addMinutes(5)

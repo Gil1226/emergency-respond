@@ -63,11 +63,17 @@ function Login(){
                             <a href="" className="link mt-3">Forget Password</a>
                         </div>
                     </form>
-                    <div className="mt-7 text-red-700 text-center">
+                    <div className=" text-red-700 text-center">
                         {errors.general && <p className="text-xs">{errors.general}</p>}
                         {errors.email && <p>{errors.email}</p>}
                         {errors.password && <p>{errors.password}</p>}
-                        {errors.notVerify && <div><p>{errors.notVerify}</p><p className="text-center underline text-black cursor-pointer" onClick={(e) => verify(e, data.email)}>Verify now</p></div>}
+                        {errors.notVerify && 
+                            <div>
+                                <p>{errors.notVerify}</p><p className="text-center underline text-black cursor-pointer" 
+                                onClick={(e) => verify(e, data.email)}>
+                                    Verify now
+                                </p>
+                            </div>}
                     </div>
                 </div>
                 <p className="text-center text-white mt-4">Create an Account? <a href="sign-up" className="link">Sign up</a></p>

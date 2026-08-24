@@ -9,7 +9,8 @@ import UserDashboard from "@/Components/dashboards/UserDashboard";
 
 function Dashboard({reports}) {
     const hour = new Date().getHours();
-
+    const {auth} = usePage().props;
+    
     const greeting = () => {
         if (hour < 12) {
             return "Good Morning,"
@@ -23,9 +24,13 @@ function Dashboard({reports}) {
         <div className="md:bg-slate-950">
             <div className="flex-col-between m-auto md:w-[27rem] md:bg-white">
                 <TopPanel/>
-                {/*<AmbulanceDashboard reports={reports} greeting={greeting()}/>*/}
-                {/*<HospitalDashboard reports={reports} greeting={greeting()} />*/}
-                <UserDashboard reports={reports} greeting={greeting()}/> 
+                {auth.user.role ? 
+                    <AmbulanceDashboard reports={reports} greeting={greeting()}/> :
+                auth.user.role ? 
+                    <UserDashboard reports={reports} greeting={greeting()}/>:
+                    <HospitalDashboard reports={reports} greeting={greeting()} />
+                }
+                 
                 <NavigationBtn/>
                 
             </div>
