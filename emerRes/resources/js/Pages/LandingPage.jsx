@@ -32,7 +32,7 @@ function LandingPage() {
                         </p>
                         <div className="flex gap-3.5 flex-wrap justify-center lg:justify-start">
                             <a href="/sign-up" className="btn-solid-white">Create your account</a>
-                            <a href="#hospitals" className="btn-outline-white">Request hospital access</a>
+                            {/*<a href="#hospitals" className="btn-outline-white">Request hospital access</a>*/}
                         </div>
                     </div>
 
@@ -254,7 +254,7 @@ function LandingPage() {
                             <li className="flex gap-2.5 text-[14.5px]"><span className="text-rescued font-bold">✓</span>Track ambulance availability across your fleet</li>
                             <li className="flex gap-2.5 text-[14.5px]"><span className="text-rescued font-bold">✓</span>Full history of every case your hospital responded to</li>
                         </ul>
-                        <a href="#" className="btn-primary">Request hospital access</a>
+                        {/*<a href="#hospitals" className="btn-outline-white">Request hospital access</a>*/}
                         <p className="text-xs text-muted mt-3">🔒 Reviewed by an admin before your dashboard goes live — usually within 1–2 business days.</p>
                     </div>
 
@@ -305,7 +305,7 @@ function LandingPage() {
                         <p className="opacity-90 max-w-[520px] mx-auto mb-7 text-base">Sign up to report an accident and track it in real time. Hospitals can request access — an admin reviews and approves each request before the dashboard unlocks.</p>
                         <div className="flex gap-3.5 justify-center flex-wrap">
                             <a href="#" className="btn-solid-white">Create your account</a>
-                            <a href="#hospitals" className="btn-outline-white">Request hospital access</a>
+                            {/*<a href="#hospitals" className="btn-outline-white">Request hospital access</a>*/}
                         </div>
                         <p className="max-w-[640px] mx-auto mt-6 text-[13px] opacity-85"><strong className="opacity-100">Emergency Respond supplements, not replaces, your local emergency hotline.</strong> In a life-threatening emergency, call your local emergency number first.</p>
                     </div>
